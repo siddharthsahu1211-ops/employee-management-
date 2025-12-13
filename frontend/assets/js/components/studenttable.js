@@ -1,1 +1,1 @@
-// Student table component
+// employee table component
