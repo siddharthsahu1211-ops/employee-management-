@@ -1,28 +1,40 @@
-import { $, createElement } from "../utils/dom.js";
+import { $ } from "../utils/dom.js";
+import { editEmployee, deleteEmployee } from "../controllers/employeecontroller.js";
 
-// Resets the input form to its default state for creating a new employee
-export function resetForm() {
-  // Use the native .reset() method on the HTML form element
-  $("employeeForm").reset();
+export function renderEmployeeTable(employees) {
+  const body = $("employeeTableBody");
+  const noEmployee = $("noemployee");
 
-  // Change the submit button text back to "Add employee"
-  $("submitBtn").textContent = "Add employee";
+  body.innerHTML = "";
 
-  // Hide the "Cancel" button, as we are no longer in 'edit' mode
-  $("cancelBtn").style.display = "none";
-}
+  if (!employees || employees.length === 0) {
+    noEmployee.style.display = "block";
+    return;
+  }
 
-// Populates the input form fields with data from a selected employee object (for editing)
-export function fillForm(employee) {
-  // Fill each input field with the corresponding property from the employee data
-  $("name").value = employee.name;
-  $("email").value = employee.email;
-  $("course").value = employee.course;
-  $("year").value = employee.year;
+  noEmployee.style.display = "none";
 
-  // Change the submit button text to "Update employee"
-  $("submitBtn").textContent = "Update employee";
+  employees.forEach(emp => {
+    const row = document.createElement("tr");
+    row.className = "border-b";
 
-  // Show the "Cancel" button, allowing the user to exit 'edit' mode
-  $("cancelBtn").style.display = "inline-block";
+    row.innerHTML = `
+      <td class="px-3 py-2">${emp.id}</td>
+      <td class="px-3 py-2">${emp.name}</td>
+      <td class="px-3 py-2">${emp.email}</td>
+      <td class="px-3 py-2">${emp.course || ""}</td>
+      <td class="px-3 py-2">${emp.year || ""}</td>
+      <td class="px-3 py-2 flex space-x-2">
+        <button class="bg-yellow-400 hover:bg-yellow-500 text-black py-1 px-3 rounded"
+          data-edit="${emp.id}">Edit</button>
+        <button class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded"
+          data-delete="${emp.id}">Delete</button>
+      </td>
+    `;
+
+    row.querySelector("[data-edit]").onclick = () => editEmployee(emp.id);
+    row.querySelector("[data-delete]").onclick = () => deleteEmployee(emp.id);
+
+    body.appendChild(row);
+  });
 }

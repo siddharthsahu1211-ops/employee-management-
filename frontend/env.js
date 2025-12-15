@@ -1,6 +1,4 @@
-// Environment configuration
-// Add environment variables here
 window.ENV = {
-  APP_NAME: "employee Management System",
+  APP_NAME: "Employee Management System",
   API_BASE_URL: "/api/employee"
 };
