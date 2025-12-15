@@ -1,1 +1,12 @@
-/* Main stylesheet */
+
+
+/* Only for minor global tweaks */
+
+body {
+  scroll-behavior: smooth;
+}
+
+/* Optional: animate alert fade */
+#alertContainer > div {
+  transition: all 0.3s ease;
+}
