@@ -2,15 +2,14 @@
 # Add employee-related controller logic here
 # Handlers are responsible for dealing with HTTP details (headers, body, methods)
 
-import json
 from core.responses import send_json, send_404
 from core.request import parse_json_body
 from services.employee_service import (
-    service_get_all
-    , service_get_one
-    , service_create
-    , service_update
-    , service_delete
+    service_get_all,
+    service_get_one,
+    service_create,
+    service_update,
+    service_delete,
 )
 
 def get_all_employee(handler):

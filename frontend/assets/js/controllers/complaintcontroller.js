@@ -5,22 +5,17 @@ import { resetForm, fillForm } from "../components/complaintform.js";
 import { setState, getState } from "../state/store.js";
 import { $ } from "../utils/dom.js";
 
-/* ===============================
-   INIT CONTROLLER
-================================ */
 export function initComplaintController() {
   loadComplaints();
 
   $("complaintForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const data = {
       title: $("title").value.trim(),
       description: $("description").value.trim()
     };
 
     const { editingId } = getState();
-
     if (editingId) {
       await updateComplaint(editingId, data);
     } else {
@@ -34,13 +29,9 @@ export function initComplaintController() {
   });
 }
 
-/* ===============================
-   LOAD COMPLAINTS
-================================ */
 export async function loadComplaints() {
   const spinner = $("loadingSpinner");
   const table = $("complaintTableContainer");
-
   spinner.style.display = "block";
   table.style.display = "none";
 
@@ -57,9 +48,6 @@ export async function loadComplaints() {
   }
 }
 
-/* ===============================
-   CREATE
-================================ */
 export async function createComplaint(data) {
   const res = await apiCreate(data);
   if (res.ok) {
@@ -69,9 +57,6 @@ export async function createComplaint(data) {
   }
 }
 
-/* ===============================
-   EDIT
-================================ */
 export async function editComplaint(id) {
   const complaint = await apiGetOne(id);
   setState({ editingId: id });
@@ -79,9 +64,6 @@ export async function editComplaint(id) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-/* ===============================
-   UPDATE
-================================ */
 export async function updateComplaint(id, data) {
   const res = await apiUpdate(id, data);
   if (res.ok) {
@@ -92,12 +74,8 @@ export async function updateComplaint(id, data) {
   }
 }
 
-/* ===============================
-   DELETE
-================================ */
 export async function deleteComplaint(id) {
   if (!confirm("Delete this complaint?")) return;
-
   const res = await apiDelete(id);
   if (res.ok) {
     showAlert("Complaint deleted");

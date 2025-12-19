@@ -1,36 +1,49 @@
 // frontend/assets/js/router/viewrouter.js
-
 import { initEmployeeController } from "../controllers/employeecontroller.js";
 import { initComplaintController } from "../controllers/complaintcontroller.js";
 
 // Load a view into #app container
 async function loadView(path) {
-  const res = await fetch(path);
-  if (!res.ok) {
-    document.querySelector("#app").innerHTML = "<h2 class='text-red-500'>Failed to load page</h2>";
-    return;
+  try {
+    const res = await fetch(path);
+    if (!res.ok) throw new Error("Failed to fetch page");
+
+    const html = await res.text();
+    const appContainer = document.querySelector("#app");
+    if (!appContainer) {
+      console.error("No #app container found in DOM");
+      return;
+    }
+
+    appContainer.innerHTML = html;
+  } catch (err) {
+    console.error(err);
+    document.querySelector("#app").innerHTML = `<h2 class='text-red-500'>Failed to load page</h2>`;
   }
-  const html = await res.text();
-  document.querySelector("#app").innerHTML = html;
 }
 
 // Decide which view to load based on URL
 export async function router() {
   const path = window.location.pathname;
 
-  if (path === "/" || path === "/home") {
-    await loadView("/frontend/pages/home.html");
-  } 
-  else if (path === "/employee") {
-    await loadView("/frontend/pages/students.html");
-    initEmployeeController(); // Initialize controller after the view loads
-  } 
-  else if (path === "/complaints") {
-    await loadView("/frontend/pages/complaints.html");
-    initComplaintController(); // Initialize complaint controller
-  } 
-  else {
-    await loadView("/frontend/pages/404.html");
+  switch (path) {
+    case "/":
+    case "/home":
+      await loadView("/frontend/pages/home.html");
+      break;
+
+    case "/employee":
+      await loadView("/frontend/pages/students.html");
+      initEmployeeController(); // Initialize controller after view is loaded
+      break;
+
+    case "/complaints":
+      await loadView("/frontend/pages/complaints.html");
+      initComplaintController(); // Initialize complaints controller
+      break;
+
+    default:
+      await loadView("/frontend/pages/404.html");
   }
 }
 
