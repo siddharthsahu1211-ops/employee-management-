@@ -20,6 +20,10 @@ from controllers.complaint import (
     update_complaint_controller,
     delete_complaint_controller
 )
+from controllers.payroll import (
+    get_all_payroll_controller,
+    create_payroll_controller
+)
 
 FRONTEND_ROUTES = {"/", "/home", "/employee", "/complaints"}
 
@@ -64,6 +68,8 @@ class employeeRouter(BaseHTTPRequestHandler):
         if path.startswith("/api/complaints/"):
             complaint_id = int(path.split("/")[-1])
             return get_complaint_controller(self, complaint_id)
+        if path == "/api/payroll":
+            return get_all_payroll_controller(self)
 
         return send_404(self)
 
@@ -72,6 +78,8 @@ class employeeRouter(BaseHTTPRequestHandler):
             return create_employee(self)
         if self.path == "/api/complaints":
             return create_complaint_controller(self)
+        if self.path == "/api/payroll":
+            return create_payroll_controller(self)
         return send_404(self)
 
     def do_PUT(self):

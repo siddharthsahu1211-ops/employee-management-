@@ -1,0 +1,26 @@
+<div class="max-w-4xl mx-auto p-6">
+  <div class="flex justify-between mb-6">
+    <h1 class="text-3xl font-bold">Payroll Management</h1>
+    <a href="/home" data-link class="text-blue-600 underline">← Back</a>
+  </div>
+
+  <form id="payrollForm" class="bg-white p-4 rounded shadow space-y-3 mb-6">
+    <input id="employee_id" type="number" placeholder="Employee ID" class="w-full border p-2" required>
+    <input id="salary" type="number" placeholder="Salary" class="w-full border p-2" required>
+
+    <button class="bg-blue-500 text-white px-4 py-2 rounded">
+      Add Payroll
+    </button>
+  </form>
+
+  <table class="w-full border">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="p-2">ID</th>
+        <th class="p-2">Employee</th>
+        <th class="p-2">Salary</th>
+      </tr>
+    </thead>
+    <tbody id="payrollTable"></tbody>
+  </table>
+</div>
