@@ -50,3 +50,57 @@ def db_delete(employee_id):
     conn.commit()
     conn.close()
     return employee
+# database/queries.py
+
+# =========================
+# COMPLAINT QUERIES
+# =========================
+
+# ===== COMPLAINT QUERIES =====
+
+def db_get_all_complaints():
+    conn = get_connection()
+    rows = conn.execute("SELECT * FROM complaints ORDER BY id DESC").fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+def db_get_one_complaint(complaint_id):
+    conn = get_connection()
+    row = conn.execute(
+        "SELECT * FROM complaints WHERE id = ?",
+        (complaint_id,)
+    ).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+def db_create_complaint(data):
+    conn = get_connection()
+    cur = conn.execute(
+        "INSERT INTO complaints (title, description) VALUES (?, ?)",
+        (data["title"], data["description"])
+    )
+    conn.commit()
+    new_id = cur.lastrowid
+    conn.close()
+    return db_get_one_complaint(new_id)
+
+def db_update_complaint(complaint_id, data):
+    conn = get_connection()
+    conn.execute(
+        "UPDATE complaints SET title=?, description=? WHERE id=?",
+        (data["title"], data["description"], complaint_id)
+    )
+    conn.commit()
+    conn.close()
+    return db_get_one_complaint(complaint_id)
+
+def db_delete_complaint(complaint_id):
+    complaint = db_get_one_complaint(complaint_id)
+    if not complaint:
+        return None
+
+    conn = get_connection()
+    conn.execute("DELETE FROM complaints WHERE id=?", (complaint_id,))
+    conn.commit()
+    conn.close()
+    return complaint

@@ -25,7 +25,7 @@ from controllers.payroll import (
     create_payroll_controller
 )
 
-FRONTEND_ROUTES = {"/", "/home", "/employee", "/complaints"}
+FRONTEND_ROUTES = {"/", "/home", "/employee", "/complaints", "/payroll"}
 
 def handle_ui_routes(handler, path):
     """Serve SPA frontend pages"""
@@ -63,16 +63,15 @@ class employeeRouter(BaseHTTPRequestHandler):
             return get_employee(self, employee_id)
 
         # Complaints API routes
+        # Complaints API routes
         if path == "/api/complaints":
-            return get_all_complaints_controller(self)
+           return get_all_complaints_controller(self)
+
         if path.startswith("/api/complaints/"):
             complaint_id = int(path.split("/")[-1])
             return get_complaint_controller(self, complaint_id)
-        if path == "/api/payroll":
-            return get_all_payroll_controller(self)
 
-        return send_404(self)
-
+ 
     def do_POST(self):
         if self.path == "/api/employee":
             return create_employee(self)

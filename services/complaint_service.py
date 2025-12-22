@@ -1,52 +1,22 @@
-import sqlite3
-from database.connection import get_connection
+from database.queries import (
+    db_get_all_complaints,
+    db_get_one_complaint,
+    db_create_complaint,
+    db_update_complaint,
+    db_delete_complaint
+)
 
-def get_all_complaints():
-    conn = get_connection()
-    conn.row_factory = sqlite3.Row
-    cursor = conn.execute("SELECT * FROM complaints")
-    rows = cursor.fetchall()
-    conn.close()
-    return [dict(row) for row in rows]
+def service_get_all():
+    return db_get_all_complaints()
 
-def get_complaint(complaint_id):
-    conn = get_connection()
-    conn.row_factory = sqlite3.Row
-    cursor = conn.execute(
-        "SELECT * FROM complaints WHERE id = ?",
-        (complaint_id,)
-    )
-    row = cursor.fetchone()
-    conn.close()
-    return dict(row) if row else None
+def service_get_one(complaint_id):
+    return db_get_one_complaint(complaint_id)
 
-def create_complaint(data):
-    conn = get_connection()
-    cursor = conn.execute(
-        "INSERT INTO complaints (title, description) VALUES (?, ?)",
-        (data["title"], data["description"])
-    )
-    conn.commit()
-    complaint_id = cursor.lastrowid
-    conn.close()
-    return get_complaint(complaint_id)
+def service_create(data):
+    return db_create_complaint(data)
 
-def update_complaint(complaint_id, data):
-    conn = get_connection()
-    conn.execute(
-        "UPDATE complaints SET title = ?, description = ? WHERE id = ?",
-        (data["title"], data["description"], complaint_id)
-    )
-    conn.commit()
-    conn.close()
-    return get_complaint(complaint_id)
+def service_update(complaint_id, data):
+    return db_update_complaint(complaint_id, data)
 
-def delete_complaint(complaint_id):
-    conn = get_connection()
-    conn.execute(
-        "DELETE FROM complaints WHERE id = ?",
-        (complaint_id,)
-    )
-    conn.commit()
-    conn.close()
-    return True
+def service_delete(complaint_id):
+    return db_delete_complaint(complaint_id)

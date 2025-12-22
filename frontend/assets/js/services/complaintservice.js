@@ -1,9 +1,9 @@
-const API_URL = window.ENV.API_BASE_URL + "/complaints";
+const API_URL = "/api/complaints";
 
 async function safeJson(res) {
   try {
     return await res.json();
-  } catch (_) {
+  } catch {
     return null;
   }
 }
@@ -20,22 +20,22 @@ export async function apiGetOne(id) {
   return safeJson(res);
 }
 
-export function apiCreate(data) {
+export async function apiCreate(data) {
   return fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
 }
 
-export function apiUpdate(id, data) {
+export async function apiUpdate(id, data) {
   return fetch(`${API_URL}/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
 }
 
-export function apiDelete(id) {
+export async function apiDelete(id) {
   return fetch(`${API_URL}/${id}`, { method: "DELETE" });
 }
