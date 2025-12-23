@@ -1,18 +1,7 @@
-# Database connection
-# Add database connection logic here
-# Opens a connection to SQLite and returns it for DB operations
-
-import sqlite3
-
-DB_FILE = "employee.db"
-
-def get_connection():
-    conn = sqlite3.connect(DB_FILE)
-    conn.row_factory = sqlite3.Row
-    return conn
-
 def init_database():
     conn = get_connection()
+
+    # Employee table
     conn.execute("""
         CREATE TABLE IF NOT EXISTS employee (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,6 +13,29 @@ def init_database():
             updated_at TEXT
         )
     """)
+
+    # Complaints table
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS complaints (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            description TEXT NOT NULL,
+            created_at TEXT
+        )
+    """)
+    # Payroll table
+    
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS payroll (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            employee_id INTEGER,
+            salary REAL,
+            month TEXT,
+            created_at TEXT,
+            FOREIGN KEY(employee_id) REFERENCES employee(id)
+        )
+    """)
+
     conn.commit()
     conn.close()
     print("✓ Database initialized")

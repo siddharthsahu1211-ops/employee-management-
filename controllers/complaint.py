@@ -1,5 +1,3 @@
-# controllers/complaint.py
-
 from core.responses import send_json, send_404
 from core.request import parse_json_body
 from services.complaint_service import (
@@ -7,7 +5,7 @@ from services.complaint_service import (
     service_get_one,
     service_create,
     service_update,
-    service_delete,
+    service_delete
 )
 
 def get_all_complaints_controller(handler):
@@ -19,11 +17,7 @@ def get_complaint_controller(handler, complaint_id):
 
 def create_complaint_controller(handler):
     data = parse_json_body(handler)
-    if not data:
-        return send_json(handler, 400, {"error": "Invalid JSON"})
-
-    new_complaint = service_create(data)
-    return send_json(handler, 201, new_complaint)
+    return send_json(handler, 201, service_create(data))
 
 def update_complaint_controller(handler, complaint_id):
     data = parse_json_body(handler)
@@ -32,4 +26,4 @@ def update_complaint_controller(handler, complaint_id):
 
 def delete_complaint_controller(handler, complaint_id):
     deleted = service_delete(complaint_id)
-    return send_json(handler, 200, {"deleted": True}) if deleted else send_404(handler)
+    return send_json(handler, 200, deleted) if deleted else send_404(handler)

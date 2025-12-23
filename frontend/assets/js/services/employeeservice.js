@@ -1,4 +1,4 @@
-const API_URL = window.ENV.API_BASE_URL;
+const API_URL = window.ENV.API_BASE_URL_employees;
 
 async function safeJson(res) {
   try {

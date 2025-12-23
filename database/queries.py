@@ -56,7 +56,7 @@ def db_delete(employee_id):
 # COMPLAINT QUERIES
 # =========================
 
-# ===== COMPLAINT QUERIES =====
+# ---------- COMPLAINT QUERIES ----------
 
 def db_get_all_complaints():
     conn = get_connection()
@@ -64,10 +64,10 @@ def db_get_all_complaints():
     conn.close()
     return [dict(r) for r in rows]
 
-def db_get_one_complaint(complaint_id):
+def db_get_complaint(complaint_id):
     conn = get_connection()
     row = conn.execute(
-        "SELECT * FROM complaints WHERE id = ?",
+        "SELECT * FROM complaints WHERE id=?",
         (complaint_id,)
     ).fetchone()
     conn.close()
@@ -76,13 +76,13 @@ def db_get_one_complaint(complaint_id):
 def db_create_complaint(data):
     conn = get_connection()
     cur = conn.execute(
-        "INSERT INTO complaints (title, description) VALUES (?, ?)",
-        (data["title"], data["description"])
+        "INSERT INTO complaints (title, description, created_at) VALUES (?, ?, ?)",
+        (data["title"], data["description"], datetime.now().isoformat())
     )
     conn.commit()
     new_id = cur.lastrowid
     conn.close()
-    return db_get_one_complaint(new_id)
+    return db_get_complaint(new_id)
 
 def db_update_complaint(complaint_id, data):
     conn = get_connection()
@@ -92,15 +92,60 @@ def db_update_complaint(complaint_id, data):
     )
     conn.commit()
     conn.close()
-    return db_get_one_complaint(complaint_id)
+    return db_get_complaint(complaint_id)
 
 def db_delete_complaint(complaint_id):
-    complaint = db_get_one_complaint(complaint_id)
+    complaint = db_get_complaint(complaint_id)
     if not complaint:
         return None
-
     conn = get_connection()
     conn.execute("DELETE FROM complaints WHERE id=?", (complaint_id,))
     conn.commit()
     conn.close()
     return complaint
+
+# -------- PAYROLL QUERIES --------
+
+from datetime import datetime
+from .connection import get_connection
+
+# -------- PAYROLL --------
+
+def db_get_all_payroll():
+    conn = get_connection()
+    rows = conn.execute("SELECT * FROM payroll ORDER BY id DESC").fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+def db_create_payroll(data):
+    conn = get_connection()
+    now = datetime.now().isoformat()
+
+    cur = conn.execute("""
+        INSERT INTO payroll (employee_id, salary, month, created_at)
+        VALUES (?, ?, ?, ?)
+    """, (data["employee_id"], data["salary"], data["month"], now))
+
+    conn.commit()
+    payroll_id = cur.lastrowid
+    conn.close()
+    return payroll_id
+
+def db_update_payroll(payroll_id, data):
+    conn = get_connection()
+    conn.execute("""
+        UPDATE payroll
+        SET employee_id=?, salary=?, month=?
+        WHERE id=?
+    """, (data["employee_id"], data["salary"], data["month"], payroll_id))
+
+    conn.commit()
+    conn.close()
+    return True
+
+def db_delete_payroll(payroll_id):
+    conn = get_connection()
+    conn.execute("DELETE FROM payroll WHERE id=?", (payroll_id,))
+    conn.commit()
+    conn.close()
+    return True

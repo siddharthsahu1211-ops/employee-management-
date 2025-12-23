@@ -1,4 +1,4 @@
-const API_URL = "/api/complaints";
+const API_URL = window.ENV.API_BASE_URL_complaints;
 
 async function safeJson(res) {
   try {

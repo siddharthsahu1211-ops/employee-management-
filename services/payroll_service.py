@@ -1,17 +1,18 @@
-from database.connection import get_connection
+from database.queries import (
+    db_get_all_payroll,
+    db_create_payroll,
+    db_update_payroll,
+    db_delete_payroll
+)
 
-def get_all_payroll():
-    conn = get_connection()
-    rows = conn.execute("SELECT * FROM payroll").fetchall()
-    conn.close()
-    return [dict(r) for r in rows]
+def service_get_all():
+    return db_get_all_payroll()
 
-def create_payroll(data):
-    conn = get_connection()
-    cur = conn.execute(
-        "INSERT INTO payroll (employee_id, salary) VALUES (?, ?)",
-        (data["employee_id"], data["salary"])
-    )
-    conn.commit()
-    conn.close()
-    return {"id": cur.lastrowid, **data}
+def service_create(data):
+    return db_create_payroll(data)
+
+def service_update(payroll_id, data):
+    return db_update_payroll(payroll_id, data)
+
+def service_delete(payroll_id):
+    return db_delete_payroll(payroll_id)
