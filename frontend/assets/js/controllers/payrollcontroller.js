@@ -49,34 +49,53 @@ function renderTable(payroll) {
   if (!tbody) return;
   
   tbody.innerHTML = payroll.length ? payroll.map(p => `
-    <tr class="hover:bg-gray-50 transition-colors duration-150">
-      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${p.id}</td>
-      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+    <tr class="hover:bg-blue-50 transition-colors duration-200 group">
+      <td class="px-8 py-6 whitespace-nowrap">
         <div class="flex items-center">
-          <i class="fas fa-user-circle text-blue-500 mr-2"></i>
-          ${p.employee_id}
+          <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+            ${p.id}
+          </div>
         </div>
       </td>
-      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-          <i class="fas fa-dollar-sign mr-1"></i>
-          ${parseFloat(p.salary).toFixed(2)}
-        </span>
+      <td class="px-8 py-6 whitespace-nowrap">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+            <i class="fas fa-user text-gray-600"></i>
+          </div>
+          <div>
+            <div class="text-sm font-medium text-gray-900">Employee #${p.employee_id}</div>
+            <div class="text-sm text-gray-500">ID: ${p.employee_id}</div>
+          </div>
+        </div>
       </td>
-      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-        <i class="fas fa-calendar-alt text-purple-500 mr-2"></i>
-        ${p.month}
+      <td class="px-8 py-6 whitespace-nowrap">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+            <i class="fas fa-dollar-sign text-green-600 text-sm"></i>
+          </div>
+          <span class="text-lg font-semibold text-gray-900">${parseFloat(p.salary).toLocaleString()}</span>
+        </div>
       </td>
-      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-        <button onclick="editPayroll(${p.id})" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-600 transition-colors duration-150">
-          <i class="fas fa-edit mr-1"></i>Edit
-        </button>
-        <button onclick="deletePayroll(${p.id})" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-500 hover:bg-red-600 transition-colors duration-150">
-          <i class="fas fa-trash mr-1"></i>Delete
-        </button>
+      <td class="px-8 py-6 whitespace-nowrap">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+            <i class="fas fa-calendar text-purple-600 text-sm"></i>
+          </div>
+          <span class="text-sm font-medium text-gray-700">${p.month}</span>
+        </div>
+      </td>
+      <td class="px-8 py-6 whitespace-nowrap">
+        <div class="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <button onclick="editPayroll(${p.id})" class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-105 shadow-md flex items-center space-x-1">
+            <i class="fas fa-edit"></i><span>Edit</span>
+          </button>
+          <button onclick="deletePayroll(${p.id})" class="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-105 shadow-md flex items-center space-x-1">
+            <i class="fas fa-trash"></i><span>Delete</span>
+          </button>
+        </div>
       </td>
     </tr>
-  `).join('') : '<tr><td colspan="5" class="px-6 py-12 text-center text-gray-500"><div class="flex flex-col items-center"><i class="fas fa-inbox text-4xl text-gray-300 mb-2"></i><p>No payroll records found</p></div></td></tr>';
+  `).join('') : '<tr><td colspan="5" class="px-8 py-16 text-center"><div class="flex flex-col items-center space-y-4"><div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center"><i class="fas fa-inbox text-gray-400 text-2xl"></i></div><p class="text-gray-500 text-lg font-medium">No payroll records found</p><p class="text-gray-400 text-sm">Add your first payroll record to get started</p></div></td></tr>';
 }
 
 async function loadPayroll() {
