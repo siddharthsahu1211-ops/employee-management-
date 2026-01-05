@@ -1,64 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee wallah</title>
-
+    <title>Employee Management System</title>
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" type="image/png">
-
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-    <!-- Project CSS -->
     <link rel="stylesheet" href="/frontend/assets/css/style.css">
-
     <style>
-        body {
-            font-family: "Outfit", sans-serif;
-            letter-spacing: 0.3px;
-        }
+        body { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.95); }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3); }
     </style>
 </head>
-
-<body class="bg-gray-100 min-h-screen flex flex-col">
-
-    <!-- Environment variables -->
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
     <script src="/frontend/env.js"></script>
-
-    <!-- Header / Navigation -->
-    <header class="bg-white shadow p-4 flex space-x-4 ">
-        <a href="/home" data-link class="text-blue-600 hover:underline">Home</a>
-        <a href="/employee" data-link class="text-blue-600 hover:underline">Employees</a>
-        <a href="/complaints" data-link class="text-blue-600 hover:underline">Complaints</a>
-        <a href="/payroll" data-link class="text-blue-600 hover:underline">Payroll</a>
+    
+    <!-- Header -->
+    <header class="gradient-bg shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-users text-white text-2xl"></i>
+                    <h1 class="text-white text-xl font-bold">Employee Management</h1>
+                </div>
+                <nav class="flex space-x-6">
+                    <a href="/home" data-link class="text-white hover:text-blue-200 transition-colors duration-200 flex items-center space-x-2">
+                        <i class="fas fa-home"></i><span>Home</span>
+                    </a>
+                    <a href="/employee" data-link class="text-white hover:text-blue-200 transition-colors duration-200 flex items-center space-x-2">
+                        <i class="fas fa-user-tie"></i><span>Employees</span>
+                    </a>
+                    <a href="/complaints" data-link class="text-white hover:text-blue-200 transition-colors duration-200 flex items-center space-x-2">
+                        <i class="fas fa-exclamation-triangle"></i><span>Complaints</span>
+                    </a>
+                    <a href="/payroll" data-link class="text-white hover:text-blue-200 transition-colors duration-200 flex items-center space-x-2">
+                        <i class="fas fa-money-bill-wave"></i><span>Payroll</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
     </header>
 
-    <!-- SPA Root Container -->
-    <main id="app" class="max-w-3xl mx-auto p-6 flex-grow">
-        <!-- Dynamic content will render here -->
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div id="alertContainer" class="fixed top-20 right-4 z-50 space-y-2"></div>
+        <div id="app" class="min-h-96"></div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white shadow p-4 text-center text-gray-600">
-        &copy; 2025 Employee Management System
+    <footer class="bg-white border-t border-gray-200 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="text-center text-gray-600">
+                <p>&copy; 2025 Employee Management System. Built with modern web technologies.</p>
+            </div>
+        </div>
     </footer>
 
-    <!-- JS Modules -->
     <script type="module">
         import { initRouterEvents, router } from "/frontend/assets/js/router/viewrouter.js";
-
-        // Initialize router and SPA navigation
         initRouterEvents();
         router();
     </script>
 </body>
-
 </html>

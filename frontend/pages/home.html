@@ -1,27 +1,63 @@
-<div class="max-w-2x3 mx-au p-6 
-bg-white rounded shadow ">
-
-  <h1 class="text-3xl font-bold mb-4 text-gray-800">Welcome</h1>
-
-  <p class="text-gray-600 mb-8 leading-relaxed">
-    This is the starting point of your Full-Stack learning journey.<br>
-    Choose what you want to explore:
-  </p>
-
-  <div class="space-y-4 mb-6 ml-00">
-
-<a href="/employee" data-link
-    class="block w-full px-4 py-3 text-center border border-gray-300 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2">
-    <i class="fa-solid fa-users"></i>
-    employee App
-</a>
-
-<a href="/api/employee" target="_blank"
-    class="block w-full px-4 py-3 text-center border border-gray-300 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2">
-    <i class="fa-solid fa-code"></i>
-    Raw JSON API
-</a>
-
-
-  </div>
+<div class="text-center py-16">
+    <div class="max-w-4xl mx-auto">
+        <div class="mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-6">
+                <i class="fas fa-users text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Welcome to Employee Management System</h1>
+            <p class="text-xl text-gray-600 mb-8">Streamline your workforce management with our comprehensive solution</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="card rounded-xl p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-user-tie text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Employee Management</h3>
+                <p class="text-gray-600 mb-4">Manage employee records, profiles, and information efficiently</p>
+                <a href="/employee" data-link class="btn-primary text-white px-4 py-2 rounded-lg inline-flex items-center space-x-2 transition-all duration-200">
+                    <span>Manage Employees</span><i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="card rounded-xl p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-money-bill-wave text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Payroll System</h3>
+                <p class="text-gray-600 mb-4">Handle salary calculations and payroll processing seamlessly</p>
+                <a href="/payroll" data-link class="btn-primary text-white px-4 py-2 rounded-lg inline-flex items-center space-x-2 transition-all duration-200">
+                    <span>Manage Payroll</span><i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="card rounded-xl p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Complaint Management</h3>
+                <p class="text-gray-600 mb-4">Track and resolve employee complaints effectively</p>
+                <a href="/complaints" data-link class="btn-primary text-white px-4 py-2 rounded-lg inline-flex items-center space-x-2 transition-all duration-200">
+                    <span>View Complaints</span><i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="card rounded-xl p-8 bg-gradient-to-r from-blue-50 to-purple-50">
+            <div class="flex items-center justify-center space-x-8">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-blue-600">500+</div>
+                    <div class="text-gray-600">Employees Managed</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-600">99.9%</div>
+                    <div class="text-gray-600">System Uptime</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-purple-600">24/7</div>
+                    <div class="text-gray-600">Support Available</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

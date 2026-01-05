@@ -1,19 +1,66 @@
-<h1 class="text-xl font-bold mb-4">Payroll</h1>
+<div id="alertContainer" class="fixed top-20 right-4 z-50 space-y-2"></div>
 
-<form id="payrollForm" class="mb-4">
-  <input id="employee_id" placeholder="Employee ID" required />
-  <input id="salary" placeholder="Salary" required />
-  <input id="month" placeholder="Month (e.g. Jan 2025)" required />
-  <button>Add Payroll</button>
-</form>
+<div class="card rounded-xl shadow-xl p-8 mb-8">
+    <div class="flex items-center space-x-3 mb-6">
+        <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-lg">
+            <i class="fas fa-money-bill-wave text-white text-xl"></i>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-800">Payroll Management</h1>
+    </div>
 
-<table border="1">
-  <thead>
-    <tr>
-      <th>Employee</th>
-      <th>Salary</th>
-      <th>Month</th>
-    </tr>
-  </thead>
-  <tbody id="payrollTable"></tbody>
-</table>
+    <form id="payrollForm" class="bg-gray-50 rounded-lg p-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-user mr-2"></i>Employee ID
+                </label>
+                <input id="employee_id" type="number" placeholder="Enter Employee ID" required 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" />
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-dollar-sign mr-2"></i>Salary
+                </label>
+                <input id="salary" type="number" step="0.01" placeholder="Enter Salary" required 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" />
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-calendar mr-2"></i>Month
+                </label>
+                <input id="month" placeholder="e.g. Jan 2025" required 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" />
+            </div>
+        </div>
+        <div class="flex space-x-3">
+            <button type="submit" class="btn-primary text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2">
+                <i class="fas fa-plus"></i><span>Add Payroll</span>
+            </button>
+            <button type="button" id="cancelPayrollBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2" style="display:none;">
+                <i class="fas fa-times"></i><span>Cancel</span>
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="card rounded-xl shadow-xl overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-4">
+        <h2 class="text-xl font-semibold text-white flex items-center space-x-2">
+            <i class="fas fa-table"></i><span>Payroll Records</span>
+        </h2>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee ID</th>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Salary</th>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Month</th>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="payrollTableBody" class="bg-white divide-y divide-gray-200"></tbody>
+        </table>
+    </div>
+</div>

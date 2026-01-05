@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payroll Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="alertContainer" class="fixed top-4 right-4 z-50 space-y-2"></div>
+    
+    <div class="p-4">
+        <h1 class="text-xl font-bold mb-4">Payroll Management</h1>
+
+        <form id="payrollForm" class="mb-4 p-4 border rounded">
+          <div class="mb-2">
+            <input id="employee_id" type="number" placeholder="Employee ID" required class="border p-2 mr-2" />
+          </div>
+          <div class="mb-2">
+            <input id="salary" type="number" step="0.01" placeholder="Salary" required class="border p-2 mr-2" />
+          </div>
+          <div class="mb-2">
+            <input id="month" placeholder="Month (e.g. Jan 2025)" required class="border p-2 mr-2" />
+          </div>
+          <div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Add Payroll</button>
+            <button type="button" id="cancelPayrollBtn" class="bg-gray-500 text-white px-4 py-2 rounded" style="display:none;">Cancel</button>
+          </div>
+        </form>
+
+        <table border="1" class="w-full">
+          <thead>
+            <tr>
+              <th class="p-2">ID</th>
+              <th class="p-2">Employee ID</th>
+              <th class="p-2">Salary</th>
+              <th class="p-2">Month</th>
+              <th class="p-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="payrollTableBody"></tbody>
+        </table>
+    </div>
+
+    <script type="module">
+        const $ = (id) => document.getElementById(id);
+        
+        let state = { payroll: [], editingId: null };
+        
+        function showAlert(message, type = "success") {
+            const container = $("alertContainer");
+            const el = document.createElement("div");
+            el.className = `px-4 py-2 rounded shadow text-white ${type === "success" ? "bg-green-500" : "bg-red-500"}`;
+            el.textContent = message;
+            container.appendChild(el);
+            setTimeout(() => el.remove(), 3000);
+        }
+
+        async function apiGetAll() {
+            const res = await fetch("/api/payroll");
+            return res.ok ? await res.json() : [];
+        }
+
+        async function apiCreate(data) {
+            return await fetch("/api/payroll", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+        }
+
+        async function apiUpdate(id, data) {
+            return await fetch(`/api/payroll/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+        }
+
+        async function apiDelete(id) {
+            return await fetch(`/api/payroll/${id}`, { method: "DELETE" });
+        }
+
+        function renderTable(payroll) {
+            const tbody = $("payrollTableBody");
+            tbody.innerHTML = payroll.length ? payroll.map(p => `
+                <tr>
+                    <td class="p-2">${p.id}</td>
+                    <td class="p-2">${p.employee_id}</td>
+                    <td class="p-2">$${parseFloat(p.salary).toFixed(2)}</td>
+                    <td class="p-2">${p.month}</td>
+                    <td class="p-2">
+                        <button onclick="editPayroll(${p.id})" class="bg-yellow-500 text-white px-2 py-1 rounded mr-1">Edit</button>
+                        <button onclick="deletePayroll(${p.id})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                    </td>
+                </tr>
+            `).join('') : '<tr><td colspan="5" class="text-center p-4">No records found</td></tr>';
+        }
+
+        async function loadPayroll() {
+            state.payroll = await apiGetAll();
+            renderTable(state.payroll);
+        }
+
+        window.editPayroll = function(id) {
+            const item = state.payroll.find(p => p.id === id);
+            if (!item) return;
+            
+            state.editingId = id;
+            $("employee_id").value = item.employee_id;
+            $("salary").value = item.salary;
+            $("month").value = item.month;
+            $("cancelPayrollBtn").style.display = "inline-block";
+            $("payrollForm").querySelector('button[type="submit"]').textContent = "Update Payroll";
+        };
+
+        window.deletePayroll = async function(id) {
+            if (!confirm("Delete this payroll record?")) return;
+            const res = await apiDelete(id);
+            if (res.ok) {
+                showAlert("Payroll deleted");
+                loadPayroll();
+            }
+        };
+
+        $("payrollForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const data = {
+                employee_id: parseInt($("employee_id").value),
+                salary: parseFloat($("salary").value),
+                month: $("month").value.trim()
+            };
+
+            const res = state.editingId 
+                ? await apiUpdate(state.editingId, data)
+                : await apiCreate(data);
+
+            if (res.ok) {
+                showAlert(state.editingId ? "Updated" : "Added");
+                $("payrollForm").reset();
+                $("cancelPayrollBtn").style.display = "none";
+                $("payrollForm").querySelector('button[type="submit"]').textContent = "Add Payroll";
+                state.editingId = null;
+                loadPayroll();
+            }
+        });
+
+        $("cancelPayrollBtn").addEventListener("click", () => {
+            $("payrollForm").reset();
+            $("cancelPayrollBtn").style.display = "none";
+            $("payrollForm").querySelector('button[type="submit"]').textContent = "Add Payroll";
+            state.editingId = null;
+        });
+
+        loadPayroll();
+    </script>
+</body>
+</html>

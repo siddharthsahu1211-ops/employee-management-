@@ -1,4 +1,4 @@
-const API_URL = window.ENV.API_BASE_URL_payroll;
+const API_URL = "/api/payroll";
 
 async function safeJson(res) {
   try {
@@ -8,33 +8,50 @@ async function safeJson(res) {
   }
 }
 
-export async function getAllPayroll() {
-  const res = await fetch(API_URL);
-  if (!res.ok) return [];
-  return safeJson(res);
+export async function apiGetAll() {
+  try {
+    const res = await fetch(API_URL);
+    if (!res.ok) return [];
+    return await safeJson(res) || [];
+  } catch (err) {
+    console.error('Error fetching payroll:', err);
+    return [];
+  }
 }
 
-export async function createPayroll(data) {
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  return safeJson(res);
+export async function apiCreate(data) {
+  try {
+    return await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+  } catch (err) {
+    console.error('Error creating payroll:', err);
+    throw err;
+  }
 }
 
-export async function updatePayroll(id, data) {
-  const res = await fetch(`${API_URL}/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  return safeJson(res);
+export async function apiUpdate(id, data) {
+  try {
+    return await fetch(`${API_URL}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+  } catch (err) {
+    console.error('Error updating payroll:', err);
+    throw err;
+  }
 }
 
-export async function deletePayroll(id) {
-  const res = await fetch(`${API_URL}/${id}`, {
-    method: "DELETE",
-  });
-  return safeJson(res);
+export async function apiDelete(id) {
+  try {
+    return await fetch(`${API_URL}/${id}`, {
+      method: "DELETE"
+    });
+  } catch (err) {
+    console.error('Error deleting payroll:', err);
+    throw err;
+  }
 }
