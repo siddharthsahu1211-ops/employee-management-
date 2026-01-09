@@ -1,43 +1,43 @@
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
+<div class="min-h-screen bg-black py-8">
     <div class="max-w-6xl mx-auto px-4">
         <!-- Header Section -->
         <div class="text-center mb-12">
             <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl mb-4 shadow-lg">
                 <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
             </div>
-            <h1 class="text-4xl font-bold text-gray-800 mb-2">Complaints Management</h1>
-            <p class="text-gray-600 text-lg">Track and resolve employee concerns</p>
+            <h1 class="text-4xl font-bold text-white mb-2">Complaints Management</h1>
+            <p class="text-gray-300 text-lg">Track and resolve employee concerns</p>
         </div>
 
         <!-- Form Section -->
-        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
+        <div class="card rounded-2xl shadow-xl p-8 mb-8">
             <div class="flex items-center mb-6">
-                <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mr-3">
-                    <i class="fas fa-plus text-red-600"></i>
+                <div class="w-8 h-8 bg-red-500 bg-opacity-20 rounded-lg flex items-center justify-center mr-3">
+                    <i class="fas fa-plus text-red-400"></i>
                 </div>
-                <h2 class="text-2xl font-semibold text-gray-800">Submit New Complaint</h2>
+                <h2 class="text-2xl font-semibold text-white">Submit New Complaint</h2>
             </div>
             
             <form id="complaintForm" class="space-y-6">
                 <div class="space-y-2">
-                    <label class="block text-sm font-medium text-gray-700">
-                        <i class="fas fa-heading text-blue-500 mr-2"></i>Complaint Title
+                    <label class="block text-sm font-medium text-gray-300">
+                        <i class="fas fa-heading text-red-400 mr-2"></i>Complaint Title
                     </label>
                     <input id="title" type="text" placeholder="Enter complaint title" required 
-                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-red-500 focus:ring-0 transition-colors duration-200 bg-gray-50 focus:bg-white" />
+                           class="w-full px-4 py-3 border-2 border-gray-600 rounded-xl focus:border-red-500 focus:ring-0 transition-colors duration-200 bg-gray-800 text-white placeholder-gray-400" />
                 </div>
                 <div class="space-y-2">
-                    <label class="block text-sm font-medium text-gray-700">
-                        <i class="fas fa-align-left text-green-500 mr-2"></i>Description
+                    <label class="block text-sm font-medium text-gray-300">
+                        <i class="fas fa-align-left text-red-400 mr-2"></i>Description
                     </label>
                     <textarea id="description" placeholder="Describe the complaint in detail..." required rows="4"
-                              class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-red-500 focus:ring-0 transition-colors duration-200 bg-gray-50 focus:bg-white resize-none"></textarea>
+                              class="w-full px-4 py-3 border-2 border-gray-600 rounded-xl focus:border-red-500 focus:ring-0 transition-colors duration-200 bg-gray-800 text-white placeholder-gray-400 resize-none"></textarea>
                 </div>
                 <div class="flex space-x-4 pt-4">
-                    <button type="submit" id="submitBtn" class="bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center space-x-2">
+                    <button type="submit" id="submitBtn" class="btn-primary text-black px-8 py-3 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center space-x-2">
                         <i class="fas fa-paper-plane"></i><span>Submit Complaint</span>
                     </button>
-                    <button type="button" id="cancelBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 shadow-lg hidden">
+                    <button type="button" id="cancelBtn" class="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 flex items-center space-x-2 shadow-lg hidden">
                         <i class="fas fa-times"></i><span>Cancel</span>
                     </button>
                 </div>
@@ -45,8 +45,8 @@
         </div>
 
         <!-- Table Section -->
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-            <div class="bg-gradient-to-r from-gray-800 to-gray-900 px-8 py-6">
+        <div class="card rounded-2xl shadow-xl overflow-hidden">
+            <div class="bg-gradient-to-r from-red-600 to-pink-600 px-8 py-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
                         <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
@@ -54,36 +54,36 @@
                         </div>
                         <h2 class="text-xl font-semibold text-white">Complaint Records</h2>
                     </div>
-                    <div class="text-sm text-gray-300">
+                    <div class="text-sm text-gray-200">
                         <i class="fas fa-database mr-1"></i>Issue Tracking System
                     </div>
                 </div>
             </div>
             
-            <div id="loadingSpinner" class="text-center py-8">
+            <div id="loadingSpinner" class="text-center py-8 bg-black">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto"></div>
-                <p class="text-gray-500 mt-2">Loading complaints...</p>
+                <p class="text-gray-400 mt-2">Loading complaints...</p>
             </div>
 
-            <div id="complaintTableContainer" class="hidden overflow-x-auto">
+            <div id="complaintTableContainer" class="hidden overflow-x-auto bg-black">
                 <table class="w-full">
-                    <thead class="bg-gray-50 border-b border-gray-200">
+                    <thead class="bg-gray-900 border-b border-gray-700">
                         <tr>
-                            <th class="px-8 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
-                            <th class="px-8 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Title</th>
-                            <th class="px-8 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Description</th>
-                            <th class="px-8 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Title</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Description</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="complaintTableBody" class="bg-white divide-y divide-gray-100"></tbody>
+                    <tbody id="complaintTableBody" class="bg-black divide-y divide-gray-800"></tbody>
                 </table>
-                <div id="noComplaints" class="px-8 py-16 text-center hidden">
+                <div id="noComplaints" class="px-8 py-16 text-center hidden bg-black">
                     <div class="flex flex-col items-center space-y-4">
-                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
-                            <i class="fas fa-clipboard-list text-gray-400 text-2xl"></i>
+                        <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
+                            <i class="fas fa-clipboard-list text-gray-500 text-2xl"></i>
                         </div>
-                        <p class="text-gray-500 text-lg font-medium">No complaints found</p>
-                        <p class="text-gray-400 text-sm">Submit your first complaint to get started</p>
+                        <p class="text-gray-400 text-lg font-medium">No complaints found</p>
+                        <p class="text-gray-500 text-sm">Submit your first complaint to get started</p>
                     </div>
                 </div>
             </div>

@@ -3,13 +3,13 @@ body {
     font-family: "Outfit", sans-serif;
     letter-spacing: 0.3px;
     min-height: 100vh;
-    background: linear-gradient(to bottom, #1E3A8A, #2563EB);
+    background: #000000;
     margin: 0;
 }
 
 /* Optional: make main content stand out */
 main, .max-w-3xl {
-    background-color:#FFFFFF; /* slightly transparent white */
+    background-color:#000000; /* slightly transparent white */
     padding: 1.5rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
@@ -17,5 +17,5 @@ main, .max-w-3xl {
 
 /* Tables */
 table {
-    background-color: #ffffff;
+    background-color: #000000;
 }
