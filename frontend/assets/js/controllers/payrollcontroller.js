@@ -49,7 +49,7 @@ function renderTable(payroll) {
   if (!tbody) return;
   
   tbody.innerHTML = payroll.length ? payroll.map(p => `
-    <tr class="hover:bg-gray-700/30 transition-all duration-300 group backdrop-blur-sm">
+    <tr class="hover:bg-orange-500/10 hover:text-white transition-all duration-500 group backdrop-blur-sm hover:shadow-lg hover:shadow-orange-500/20">
       <td class="px-6 py-4 whitespace-nowrap">
         <div class="flex items-center">
           <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 via-yellow-500 to-amber-600 rounded-xl flex items-center justify-center text-black font-bold text-sm shadow-lg">
@@ -88,10 +88,10 @@ function renderTable(payroll) {
       </td>
       <td class="px-6 py-4 whitespace-nowrap">
         <div class="flex justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <button onclick="editPayroll(${p.id})" class="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-black px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-1">
+          <button onclick="editPayroll(${p.id})" class="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-orange-500 hover:to-red-600 hover:text-white text-black px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-110 hover:rotate-1 shadow-lg flex items-center space-x-1">
             <i class="fas fa-edit"></i><span>Edit</span>
           </button>
-          <button onclick="deletePayroll(${p.id})" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-1">
+          <button onclick="deletePayroll(${p.id})" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-orange-500 hover:to-red-600 hover:text-white text-white px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-110 hover:-rotate-1 shadow-lg flex items-center space-x-1">
             <i class="fas fa-trash"></i><span>Delete</span>
           </button>
         </div>

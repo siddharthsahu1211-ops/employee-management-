@@ -25,8 +25,10 @@ def init_database():
             email TEXT NOT NULL,
             course TEXT,
             year TEXT,
+            department_id INTEGER,
             created_at TEXT,
-            updated_at TEXT
+            updated_at TEXT,
+            FOREIGN KEY (department_id) REFERENCES departments (id)
         )
     """)
 
@@ -47,6 +49,19 @@ def init_database():
             employee_id INTEGER NOT NULL,
             salary REAL NOT NULL,
             month TEXT NOT NULL,
+            created_at TEXT
+        )
+    """)
+
+    # Departments table
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS departments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            manager TEXT NOT NULL,
+            budget REAL NOT NULL,
+            location TEXT NOT NULL,
+            description TEXT,
             created_at TEXT
         )
     """)

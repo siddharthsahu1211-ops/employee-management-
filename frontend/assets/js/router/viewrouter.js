@@ -2,6 +2,8 @@
 import { initEmployeeController } from "../controllers/employeecontroller.js";
 import { initComplaintController } from "../controllers/complaintcontroller.js";
 import { initPayrollController } from "../controllers/payrollcontroller.js";
+import { initReportsController } from "../controllers/reportscontroller.js";
+import { initDepartmentsController } from "../controllers/departmentscontroller.js";
 
 // Load a view into #app container
 async function loadView(path) {
@@ -45,6 +47,16 @@ export async function router() {
     case "/payroll":
       await loadView("/frontend/pages/payroll.html");
       initPayrollController(); // Initialize payroll controller
+      break;
+
+    case "/departments":
+      await loadView("/frontend/pages/departments.html");
+      initDepartmentsController(); // Initialize departments controller
+      break;
+
+    case "/reports":
+      await loadView("/frontend/pages/reports.html");
+      initReportsController(); // Initialize reports controller
       break;
 
     default:

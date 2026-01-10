@@ -1,5 +1,5 @@
 const $ = (id) => document.getElementById(id);
-let state = { employees: [], editingId: null };
+let state = { employees: [], departments: [], editingId: null };
 
 function showAlert(message, type = "success") {
   const container = $("alertContainer");
@@ -15,6 +15,25 @@ function showAlert(message, type = "success") {
     el.style.transform = "translateX(100%)";
     setTimeout(() => el.remove(), 300);
   }, 3000);
+}
+
+async function loadDepartments() {
+  try {
+    const res = await fetch("/api/departments");
+    state.departments = res.ok ? await res.json() : [];
+    
+    const select = $("department_id");
+    if (select) {
+      select.innerHTML = '<option value="">Select Department</option>' + 
+        state.departments.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+    }
+  } catch (err) {
+    console.error("Failed to load departments:", err);
+    const select = $("department_id");
+    if (select) {
+      select.innerHTML = '<option value="">No departments available</option>';
+    }
+  }
 }
 
 async function apiGetAll() {
@@ -49,7 +68,7 @@ function renderTable(employees) {
   if (!tbody) return;
   
   tbody.innerHTML = employees.length ? employees.map(e => `
-    <tr class="hover:bg-gray-700/30 transition-all duration-300 group backdrop-blur-sm">
+    <tr class="hover:bg-orange-500/10 hover:text-white transition-all duration-500 group backdrop-blur-sm hover:shadow-lg hover:shadow-orange-500/20">
       <td class="px-6 py-4 whitespace-nowrap">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-cyan-600 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-lg">
@@ -87,10 +106,10 @@ function renderTable(employees) {
       </td>
       <td class="px-6 py-4 whitespace-nowrap">
         <div class="flex justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <button onclick="editEmployee(${e.id})" class="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-black px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-1">
+          <button onclick="editEmployee(${e.id})" class="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-orange-500 hover:to-red-600 hover:text-white text-black px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-110 hover:rotate-1 shadow-lg flex items-center space-x-1">
             <i class="fas fa-edit"></i><span>Edit</span>
           </button>
-          <button onclick="deleteEmployee(${e.id})" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-1">
+          <button onclick="deleteEmployee(${e.id})" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-orange-500 hover:to-red-600 hover:text-white text-white px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-110 hover:-rotate-1 shadow-lg flex items-center space-x-1">
             <i class="fas fa-trash"></i><span>Delete</span>
           </button>
         </div>
@@ -133,6 +152,7 @@ window.editEmployee = function(id) {
   $("email").value = item.email;
   $("course").value = item.course;
   $("year").value = item.year;
+  $("department_id").value = item.department_id || '';
   $("cancelBtn").classList.remove("hidden");
   $("submitBtn").textContent = "Update Employee";
 };
@@ -158,7 +178,8 @@ export function initEmployeeController() {
       name: $("name").value.trim(),
       email: $("email").value.trim(),
       course: $("course").value.trim(),
-      year: $("year").value.trim()
+      year: $("year").value.trim(),
+      department_id: parseInt($("department_id").value) || null
     };
 
     const res = state.editingId 
@@ -184,5 +205,6 @@ export function initEmployeeController() {
     });
   }
 
+  loadDepartments();
   loadEmployees();
 }

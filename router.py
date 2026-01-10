@@ -28,7 +28,12 @@ from controllers.payroll import (
     delete_payroll_controller
 )
 
-FRONTEND_ROUTES = {"/", "/home", "/employee", "/employees", "/complaints","/payroll"}
+from controllers.department import (
+    handle_departments,
+    handle_department_by_id
+)
+
+FRONTEND_ROUTES = {"/", "/home", "/employee", "/employees", "/complaints","/payroll", "/departments", "/reports"}
 
 def handle_ui_routes(handler, path):
     if path in FRONTEND_ROUTES:
@@ -75,6 +80,10 @@ class employeeRouter(BaseHTTPRequestHandler):
         if path == "/api/payroll":
             return get_all_payroll_controller(self)
 
+        # ✅ DEPARTMENTS
+        if path == "/api/departments":
+            return handle_departments(self)
+
         return send_404(self)
 
     def do_POST(self):
@@ -86,6 +95,9 @@ class employeeRouter(BaseHTTPRequestHandler):
 
         if self.path == "/api/payroll":
             return create_payroll_controller(self)
+
+        if self.path == "/api/departments":
+            return handle_departments(self)
 
         return send_404(self)
 
@@ -101,6 +113,10 @@ class employeeRouter(BaseHTTPRequestHandler):
             payroll_id = int(self.path.split("/")[-1])
             return update_payroll_controller(self, payroll_id)
 
+        if self.path.startswith("/api/departments/"):
+            department_id = int(self.path.split("/")[-1])
+            return handle_department_by_id(self, department_id)
+
         return send_404(self)
 
     def do_DELETE(self):
@@ -114,5 +130,9 @@ class employeeRouter(BaseHTTPRequestHandler):
         if self.path.startswith("/api/payroll/"):
             payroll_id = int(self.path.split("/")[-1])
             return delete_payroll_controller(self, payroll_id)
+
+        if self.path.startswith("/api/departments/"):
+            department_id = int(self.path.split("/")[-1])
+            return handle_department_by_id(self, department_id)
 
         return send_404(self)
