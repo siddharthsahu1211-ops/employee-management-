@@ -39,6 +39,23 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.2),
                 0 0 0 1px rgba(255, 165, 0, 0.3);
         }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-link:hover::after {
+            width: 80%;
+        }
         .btn-primary { 
             background: linear-gradient(135deg, #ffd700 0%, #ffb347 50%, #ff8c00 100%);
             transition: all 0.3s ease;
@@ -86,33 +103,47 @@
     <script src="/frontend/env.js"></script>
     
     <!-- Header -->
-    <header class="gradient-bg shadow-lg">
+    <header class="gradient-bg shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-500"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center space-x-3">
-                    <i class="fas fa-users text-white text-2xl"></i>
-                    <h1 class="text-white text-xl font-bold">Employee Management</h1>
+                    <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-briefcase text-white text-lg"></i>
+                    </div>
+                    <span class="text-white text-xl font-bold">EmployeeHub</span>
                 </div>
-                <nav class="flex space-x-6">
-                    <a href="/home" data-link class="text-white hover:text-orange-400 transition-colors duration-200 flex items-center space-x-2">
-                        <i class="fas fa-home"></i><span>Home</span>
+                <nav class="hidden md:flex items-center space-x-1">
+                    <a href="/home" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                        <i class="fas fa-home text-sm"></i>
+                        <span>Home</span>
                     </a>
-                    <a href="/employee" data-link class="text-white hover:text-orange-400 transition-colors duration-200 flex items-center space-x-2">
-                        <i class="fas fa-user-tie"></i><span>Employees</span>
+                    <a href="/employee" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                        <i class="fas fa-users text-sm"></i>
+                        <span>Employees</span>
                     </a>
-                    <a href="/complaints" data-link class="text-white hover:text-orange-400 transition-colors duration-200 flex items-center space-x-2">
-                        <i class="fas fa-exclamation-triangle"></i><span>Complaints</span>
+                    <a href="/departments" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                        <i class="fas fa-building text-sm"></i>
+                        <span>Departments</span>
                     </a>
-                    <a href="/payroll" data-link class="text-white hover:text-orange-400 transition-colors duration-200 flex items-center space-x-2">
-                        <i class="fas fa-money-bill-wave"></i><span>Payroll</span>
+                    <a href="/payroll" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                        <i class="fas fa-money-bill-wave text-sm"></i>
+                        <span>Payroll</span>
                     </a>
-                    <a href="/departments" data-link class="text-white hover:text-orange-400 transition-colors duration-200 flex items-center space-x-2">
-                        <i class="fas fa-building"></i><span>Departments</span>
+                    <a href="/complaints" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                        <i class="fas fa-exclamation-circle text-sm"></i>
+                        <span>Complaints</span>
                     </a>
-                    <a href="/reports" data-link class="text-white hover:text-orange-400 transition-colors duration-200 flex items-center space-x-2">
-                        <i class="fas fa-chart-bar"></i><span>Reports</span>
+                    <a href="/reports" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                        <i class="fas fa-chart-line text-sm"></i>
+                        <span>Reports</span>
                     </a>
                 </nav>
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-gray-300 text-sm"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </header>

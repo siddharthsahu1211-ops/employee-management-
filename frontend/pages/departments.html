@@ -10,7 +10,8 @@
         </div>
 
         <!-- Form Section -->
-        <div class="card rounded-2xl shadow-xl p-8 mb-8">
+        <div class="card rounded-3xl shadow-xl p-8 mb-8 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 to-pink-600"></div>
             <div class="flex items-center mb-6">
                 <div class="w-8 h-8 bg-orange-500 bg-opacity-20 rounded-lg flex items-center justify-center mr-3">
                     <i class="fas fa-plus text-orange-400"></i>
@@ -70,7 +71,8 @@
         </div>
 
         <!-- Table Section -->
-        <div class="card rounded-2xl shadow-xl overflow-hidden">
+        <div class="card rounded-3xl shadow-xl overflow-hidden relative">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 to-pink-600"></div>
             <div class="bg-gradient-to-r from-orange-600 to-red-600 px-8 py-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
@@ -92,7 +94,7 @@
 
             <div id="departmentTableContainer" class="hidden overflow-x-auto bg-black">
                 <table class="w-full">
-                    <thead class="bg-gray-900 border-b border-gray-700">
+                    <thead class="bg-gray-900">
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">ID</th>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Name</th>
@@ -102,7 +104,7 @@
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="departmentTableBody" class="bg-black divide-y divide-gray-800"></tbody>
+                    <tbody id="departmentTableBody" class="bg-black"></tbody>
                 </table>
                 <div id="noDepartments" class="px-8 py-16 text-center hidden bg-black">
                     <div class="flex flex-col items-center space-y-4">

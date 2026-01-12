@@ -4,6 +4,7 @@ import { initComplaintController } from "../controllers/complaintcontroller.js";
 import { initPayrollController } from "../controllers/payrollcontroller.js";
 import { initReportsController } from "../controllers/reportscontroller.js";
 import { initDepartmentsController } from "../controllers/departmentscontroller.js";
+import { initHomeController } from "../controllers/homecontroller.js";
 
 // Load a view into #app container
 async function loadView(path) {
@@ -33,6 +34,7 @@ export async function router() {
     case "/":
     case "/home":
       await loadView("/frontend/pages/home.html");
+      initHomeController(); // Initialize home controller
       break;
 
     case "/employee":

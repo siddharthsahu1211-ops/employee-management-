@@ -8,13 +8,27 @@ function showAlert(message, type = "success") {
     return;
   }
   const el = document.createElement("div");
-  el.className = `px-4 py-3 rounded-lg shadow-lg text-white transform transition-all duration-300 ${type === "success" ? "bg-green-500" : "bg-red-500"} flex items-center space-x-2`;
-  el.innerHTML = `<i class="fas ${type === "success" ? "fa-check-circle" : "fa-exclamation-circle"}"></i><span>${message}</span>`;
+  el.className = `alert alert-${type} px-6 py-4 text-white font-medium flex items-center space-x-3 min-w-80 max-w-md`;
+  
+  const iconClass = type === "success" ? "fa-check" : "fa-exclamation-triangle";
+  el.innerHTML = `
+    <div class="alert-icon">
+      <i class="fas ${iconClass}"></i>
+    </div>
+    <div class="flex-1">
+      <div class="font-bold text-sm">${type === "success" ? "Success" : "Error"}</div>
+      <div class="text-xs opacity-90">${message}</div>
+    </div>
+    <button onclick="this.parentElement.classList.add('alert-exit'); setTimeout(() => this.parentElement.remove(), 300)" class="text-white/70 hover:text-white transition-colors">
+      <i class="fas fa-times text-xs"></i>
+    </button>
+  `;
+  
   container.appendChild(el);
   setTimeout(() => {
-    el.style.transform = "translateX(100%)";
+    el.classList.add('alert-exit');
     setTimeout(() => el.remove(), 300);
-  }, 3000);
+  }, 4000);
 }
 
 async function loadDepartments() {
@@ -68,7 +82,7 @@ function renderTable(employees) {
   if (!tbody) return;
   
   tbody.innerHTML = employees.length ? employees.map(e => `
-    <tr class="hover:bg-orange-500/10 hover:text-white transition-all duration-500 group backdrop-blur-sm hover:shadow-lg hover:shadow-orange-500/20">
+    <tr class="backdrop-blur-sm">
       <td class="px-6 py-4 whitespace-nowrap">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-cyan-600 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-lg">
@@ -90,10 +104,10 @@ function renderTable(employees) {
       </td>
       <td class="px-6 py-4 whitespace-nowrap">
         <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-lg">
-            <i class="fas fa-graduation-cap text-white text-xs"></i>
+          <div class="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center shadow-lg">
+            <i class="fas fa-building text-white text-xs"></i>
           </div>
-          <span class="text-sm font-medium text-white">${e.course}</span>
+          <span class="text-sm font-medium text-white">${e.department_name || 'N/A'}</span>
         </div>
       </td>
       <td class="px-6 py-4 whitespace-nowrap">
@@ -105,7 +119,7 @@ function renderTable(employees) {
         </div>
       </td>
       <td class="px-6 py-4 whitespace-nowrap">
-        <div class="flex justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+        <div class="flex justify-center space-x-2">
           <button onclick="editEmployee(${e.id})" class="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-orange-500 hover:to-red-600 hover:text-white text-black px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-110 hover:rotate-1 shadow-lg flex items-center space-x-1">
             <i class="fas fa-edit"></i><span>Edit</span>
           </button>
@@ -150,7 +164,6 @@ window.editEmployee = function(id) {
   state.editingId = id;
   $("name").value = item.name;
   $("email").value = item.email;
-  $("course").value = item.course;
   $("year").value = item.year;
   $("department_id").value = item.department_id || '';
   $("cancelBtn").classList.remove("hidden");
@@ -177,7 +190,6 @@ export function initEmployeeController() {
     const data = {
       name: $("name").value.trim(),
       email: $("email").value.trim(),
-      course: $("course").value.trim(),
       year: $("year").value.trim(),
       department_id: parseInt($("department_id").value) || null
     };

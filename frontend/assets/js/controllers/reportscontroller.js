@@ -120,7 +120,7 @@ function renderTable(reports) {
   noReports.classList.add("hidden");
   
   tbody.innerHTML = reports.map(r => `
-    <tr class="hover:bg-orange-500/10 hover:text-white transition-all duration-500 group backdrop-blur-sm hover:shadow-lg hover:shadow-orange-500/20">
+    <tr class="backdrop-blur-sm">
       <td class="px-6 py-4 whitespace-nowrap">
         <div class="flex items-center">
           <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-lg">

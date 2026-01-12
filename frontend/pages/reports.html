@@ -10,7 +10,8 @@
         </div>
 
         <!-- Filter Section -->
-        <div class="card rounded-2xl shadow-xl p-8 mb-8">
+        <div class="card rounded-3xl shadow-xl p-8 mb-8 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 to-red-600"></div>
             <div class="flex items-center mb-6">
                 <div class="w-8 h-8 bg-orange-500 bg-opacity-20 rounded-lg flex items-center justify-center mr-3">
                     <i class="fas fa-filter text-orange-400"></i>
@@ -48,28 +49,32 @@
 
         <!-- Summary Cards -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="card rounded-2xl p-6 text-center">
+            <div class="card rounded-3xl p-6 text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-500 to-emerald-600"></div>
                 <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-users text-white text-xl"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-white" id="totalEmployees">0</h3>
                 <p class="text-gray-400 text-sm">Total Employees</p>
             </div>
-            <div class="card rounded-2xl p-6 text-center">
+            <div class="card rounded-3xl p-6 text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 to-red-600"></div>
                 <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-rupee-sign text-white text-xl"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-white" id="totalSalary">₹0</h3>
                 <p class="text-gray-400 text-sm">Total Payroll</p>
             </div>
-            <div class="card rounded-2xl p-6 text-center">
+            <div class="card rounded-3xl p-6 text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-yellow-500 to-orange-600"></div>
                 <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-calculator text-white text-xl"></i>
                 </div>
                 <h3 class="text-2xl font-bold text-white" id="avgSalary">₹0</h3>
                 <p class="text-gray-400 text-sm">Average Salary</p>
             </div>
-            <div class="card rounded-2xl p-6 text-center">
+            <div class="card rounded-3xl p-6 text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 to-pink-600"></div>
                 <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-calendar-alt text-white text-xl"></i>
                 </div>
@@ -79,7 +84,8 @@
         </div>
 
         <!-- Report Table -->
-        <div class="card rounded-2xl shadow-xl overflow-hidden">
+        <div class="card rounded-3xl shadow-xl overflow-hidden relative">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 to-red-600"></div>
             <div class="bg-gradient-to-r from-orange-600 to-red-600 px-8 py-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
@@ -101,7 +107,7 @@
 
             <div id="reportTableContainer" class="hidden overflow-x-auto bg-black">
                 <table class="w-full">
-                    <thead class="bg-gray-900 border-b border-gray-700">
+                    <thead class="bg-gray-900">
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Employee ID</th>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Name</th>
@@ -111,7 +117,7 @@
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Month</th>
                         </tr>
                     </thead>
-                    <tbody id="reportTableBody" class="bg-black divide-y divide-gray-800"></tbody>
+                    <tbody id="reportTableBody" class="bg-black"></tbody>
                 </table>
                 <div id="noReports" class="px-8 py-16 text-center hidden bg-black">
                     <div class="flex flex-col items-center space-y-4">

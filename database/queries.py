@@ -11,7 +11,13 @@ from .connection import get_connection
 
 def db_get_all_employees():
     conn = get_connection()
-    rows = conn.execute("SELECT * FROM employee ORDER BY id DESC").fetchall()
+    query = """
+    SELECT e.*, d.name as department_name
+    FROM employee e
+    LEFT JOIN departments d ON e.department_id = d.id
+    ORDER BY e.id DESC
+    """
+    rows = conn.execute(query).fetchall()
     conn.close()
     return [dict(r) for r in rows]
 
@@ -25,8 +31,8 @@ def db_create_employee(data):
     conn = get_connection()
     now = datetime.now().isoformat()
     cur = conn.execute(
-        "INSERT INTO employee (name, email, course, year, department_id, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        (data["name"], data["email"], data["course"], data["year"], data.get("department_id"), now)
+        "INSERT INTO employee (name, email, year, department_id, created_at) VALUES (?, ?, ?, ?, ?)",
+        (data["name"], data["email"], data["year"], data.get("department_id"), now)
     )
     conn.commit()
     new_id = cur.lastrowid
@@ -37,9 +43,9 @@ def db_update_employee(employee_id, data):
     conn = get_connection()
     now = datetime.now().isoformat()
     conn.execute("""
-        UPDATE employee SET name=?, email=?, course=?, year=?, department_id=?, updated_at=?
+        UPDATE employee SET name=?, email=?, year=?, department_id=?, updated_at=?
         WHERE id=?
-    """, (data["name"], data["email"], data["course"], data["year"], data.get("department_id"), now, employee_id))
+    """, (data["name"], data["email"], data["year"], data.get("department_id"), now, employee_id))
     conn.commit()
     conn.close()
     return db_get_employee(employee_id)
@@ -210,7 +216,6 @@ def db_get_employee_payroll_report():
         e.id as employee_id,
         e.name,
         e.email,
-        e.course,
         e.year,
         d.name as department_name,
         p.salary,
