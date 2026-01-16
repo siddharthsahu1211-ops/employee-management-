@@ -11,15 +11,24 @@ from .connection import get_connection
 
 def db_get_all_employees():
     conn = get_connection()
-    query = """
-    SELECT e.*, d.name as department_name
-    FROM employee e
-    LEFT JOIN departments d ON e.department_id = d.id
-    ORDER BY e.id DESC
-    """
-    rows = conn.execute(query).fetchall()
-    conn.close()
-    return [dict(r) for r in rows]
+    try:
+        query = """
+        SELECT e.*, d.name as department_name
+        FROM employee e
+        LEFT JOIN departments d ON e.department_id = d.id
+        ORDER BY e.id DESC
+        """
+        rows = conn.execute(query).fetchall()
+        conn.close()
+        return [dict(r) for r in rows]
+    except Exception as e:
+        print(f"Error in db_get_all_employees: {e}")
+        conn.close()
+        # Fallback to simple query without JOIN
+        conn = get_connection()
+        rows = conn.execute("SELECT * FROM employee ORDER BY id DESC").fetchall()
+        conn.close()
+        return [dict(r) for r in rows]
 
 def db_get_employee(employee_id):
     conn = get_connection()
