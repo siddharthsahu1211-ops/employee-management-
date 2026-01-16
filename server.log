@@ -1,0 +1,76 @@
+127.0.0.1 - - [16/Jan/2026 09:35:32] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:32] "GET /frontend/assets/css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:32] "GET /frontend/env.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:32] "GET /frontend/assets/js/router/viewrouter.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /frontend/assets/js/controllers/departmentscontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /frontend/assets/js/controllers/homecontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /frontend/assets/js/controllers/payrollcontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /frontend/assets/js/controllers/reportscontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /frontend/assets/js/controllers/complaintcontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /frontend/assets/js/controllers/employeecontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /frontend/pages/home.html HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /api/employee HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /api/complaints HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /api/departments HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /api/payroll HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /frontend/pages/home.html HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /api/employee HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /api/payroll HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /api/departments HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:33] "GET /api/complaints HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:41] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:41] "GET /frontend/env.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:41] "GET /frontend/assets/css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:41] "GET /frontend/assets/js/router/viewrouter.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /frontend/assets/js/controllers/complaintcontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /frontend/assets/js/controllers/departmentscontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /frontend/assets/js/controllers/reportscontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /frontend/assets/js/controllers/homecontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /frontend/assets/js/controllers/employeecontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /frontend/assets/js/controllers/payrollcontroller.js HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /frontend/pages/home.html HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /frontend/pages/home.html HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /api/payroll HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /api/complaints HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /api/departments HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /api/employee HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /api/payroll HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /api/complaints HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /api/employee HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:42] "GET /api/departments HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:45] "GET /frontend/pages/students.html HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:45] "GET /frontend/pages/students.html HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:45] "GET /api/employee HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:45] "GET /api/departments HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:46] "GET /api/employee HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:46] "GET /api/departments HTTP/1.1" 200 -
+127.0.0.1 - - [16/Jan/2026 09:35:48] "GET /frontend/assets/css/style.css HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53416)
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/socketserver.py", line 318, in _handle_request_noblock
+    self.process_request(request, client_address)
+  File "/usr/local/python/3.12.1/lib/python3.12/socketserver.py", line 349, in process_request
+    self.finish_request(request, client_address)
+  File "/usr/local/python/3.12.1/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/local/python/3.12.1/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/local/python/3.12.1/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/local/python/3.12.1/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/workspaces/employee-management-/router.py", line 91, in do_POST
+    return create_employee(self)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/employee-management-/controllers/employee.py", line 24, in create_employee
+    new_employee = service_create(data)
+                   ^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/employee-management-/services/employee_service.py", line 19, in service_create
+    return db_create_employee(data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/employee-management-/database/queries.py", line 42, in db_create_employee
+    cur = conn.execute(
+          ^^^^^^^^^^^^^
+sqlite3.OperationalError: table employee has no column named department_id
+----------------------------------------
