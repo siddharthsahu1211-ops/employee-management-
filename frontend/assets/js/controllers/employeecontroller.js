@@ -129,7 +129,7 @@ function renderTable(employees) {
         </div>
       </td>
     </tr>
-  `).join('') : '<tr><td colspan="5" class="px-6 py-12 text-center"><div class="flex flex-col items-center space-y-4"><div class="w-16 h-16 glass-effect rounded-full flex items-center justify-center"><i class="fas fa-user-plus text-gray-400 text-2xl"></i></div><p class="text-gray-300 text-lg font-bold">No employees found</p><p class="text-gray-500 text-sm">Add your first employee to get started</p></div></td></tr>';
+  `).join('') : '';
 }
 
 async function loadEmployees() {
