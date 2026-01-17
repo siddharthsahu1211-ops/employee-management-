@@ -1,3 +1,5 @@
+import { exportToCSV, exportToPDF } from "../utils/exportTools.js";
+
 const $ = (id) => document.getElementById(id);
 let state = { reports: [], employees: [], payroll: [], departments: [], filteredReports: [] };
 
@@ -203,13 +205,58 @@ async function loadReports() {
   }
 }
 
+function exportReportsToCSV() {
+  console.log("Export CSV function called");
+  const columns = [
+    { key: "employee_id", label: "Employee ID" },
+    { key: "name", label: "Name" },
+    { key: "email", label: "Email" },
+    { key: "department_name", label: "Department" },
+    { key: "salary", label: "Salary" },
+    { key: "month", label: "Month" }
+  ];
+
+  const filename = `employee_payroll_report_${new Date().toISOString().split('T')[0]}.csv`;
+  exportToCSV(filename, state.filteredReports, columns);
+  showAlert("CSV export completed", "success");
+}
+
+function exportReportsToPDF() {
+  console.log("Export PDF function called");
+  const htmlContent = `
+    <h1>Employee Payroll Report</h1>
+    <div class="meta">Generated on: ${new Date().toLocaleString()}</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Department</th>
+          <th>Salary</th>
+          <th>Month</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${state.filteredReports.map(row => `
+          <tr>
+            <td>${row.employee_id}</td>
+            <td>${row.name}</td>
+            <td>${row.email}</td>
+            <td>${row.department_name || 'N/A'}</td>
+            <td>₹${row.salary}</td>
+            <td>${row.month}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+
+  exportToPDF("Employee Payroll Report", htmlContent);
+  showAlert("PDF export completed", "success");
+}
+
 export function initReportsController() {
-  const applyBtn = $("applyFilters");
-  
-  if (applyBtn) {
-    applyBtn.addEventListener("click", applyFilters);
-  }
-  
   // Auto-apply filters when dropdowns change
   const monthFilter = $("monthFilter");
   const salaryFilter = $("salaryFilter");
@@ -220,6 +267,24 @@ export function initReportsController() {
   
   if (salaryFilter) {
     salaryFilter.addEventListener("change", applyFilters);
+  }
+
+  // Export functionality
+  const exportCSVBtn = $("exportCSV");
+  const exportPDFBtn = $("exportPDF");
+
+  if (exportCSVBtn) {
+    exportCSVBtn.addEventListener("click", () => exportReportsToCSV());
+    console.log("Export CSV button found and listener added");
+  } else {
+    console.log("Export CSV button not found");
+  }
+
+  if (exportPDFBtn) {
+    exportPDFBtn.addEventListener("click", () => exportReportsToPDF());
+    console.log("Export PDF button found and listener added");
+  } else {
+    console.log("Export PDF button not found");
   }
   
   loadReports();
