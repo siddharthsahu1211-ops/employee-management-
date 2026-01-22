@@ -38,9 +38,17 @@ def init_database():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
             description TEXT NOT NULL,
+            employee_id INTEGER,
             created_at TEXT
         )
     """)
+    
+    # Add employee_id column to complaints table if it doesn't exist (migration)
+    try:
+        conn.execute("ALTER TABLE complaints ADD COLUMN employee_id INTEGER")
+    except sqlite3.OperationalError:
+        # Column already exists
+        pass
 
     # Payroll table
     conn.execute("""

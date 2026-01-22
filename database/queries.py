@@ -133,6 +133,12 @@ def db_get_payroll(payroll_id):
     conn.close()
     return dict(row) if row else None
 
+def db_get_payroll_by_employee(employee_id):
+    conn = get_connection()
+    rows = conn.execute("SELECT * FROM payroll WHERE employee_id = ? ORDER BY month DESC", (employee_id,)).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
 def db_create_payroll(data):
     conn = get_connection()
     now = datetime.now().isoformat()
@@ -181,12 +187,18 @@ def db_get_complaint(complaint_id):
     conn.close()
     return dict(row) if row else None
 
+def db_get_complaints_by_employee(employee_id):
+    conn = get_connection()
+    rows = conn.execute("SELECT * FROM complaints WHERE employee_id = ? ORDER BY created_at DESC", (employee_id,)).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
 def db_create_complaint(data):
     conn = get_connection()
     now = datetime.now().isoformat()
     cur = conn.execute(
-        "INSERT INTO complaints (title, description, created_at) VALUES (?, ?, ?)",
-        (data["title"], data["description"], now)
+        "INSERT INTO complaints (title, description, employee_id, created_at) VALUES (?, ?, ?, ?)",
+        (data["title"], data["description"], data.get("employee_id"), now)
     )
     conn.commit()
     new_id = cur.lastrowid
@@ -196,9 +208,9 @@ def db_create_complaint(data):
 def db_update_complaint(complaint_id, data):
     conn = get_connection()
     conn.execute("""
-        UPDATE complaints SET title=?, description=?
+        UPDATE complaints SET title=?, description=?, employee_id=?
         WHERE id=?
-    """, (data["title"], data["description"], complaint_id))
+    """, (data["title"], data["description"], data.get("employee_id"), complaint_id))
     conn.commit()
     conn.close()
     return db_get_complaint(complaint_id)

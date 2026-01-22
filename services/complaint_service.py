@@ -4,6 +4,7 @@
 from database.queries import (
     db_get_all_complaints,
     db_get_complaint,
+    db_get_complaints_by_employee,
     db_create_complaint,
     db_update_complaint,
     db_delete_complaint
@@ -15,6 +16,9 @@ class ComplaintService:
     
     def get_by_id(self, complaint_id):
         return db_get_complaint(complaint_id)
+    
+    def get_by_employee(self, employee_id):
+        return db_get_complaints_by_employee(employee_id)
     
     def create(self, data):
         return db_create_complaint(data)

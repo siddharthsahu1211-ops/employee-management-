@@ -33,7 +33,11 @@ from controllers.department import (
     handle_department_by_id
 )
 
-FRONTEND_ROUTES = {"/", "/home", "/employee", "/employees", "/complaints","/payroll", "/departments", "/reports"}
+from controllers.profile import (
+    get_employee_profile_controller
+)
+
+FRONTEND_ROUTES = {"/", "/home", "/employee", "/employees", "/complaints","/payroll", "/departments", "/reports", "/profile"}
 
 def handle_ui_routes(handler, path):
     if path in FRONTEND_ROUTES:
@@ -67,6 +71,11 @@ class employeeRouter(BaseHTTPRequestHandler):
         if path.startswith("/api/employee/") or path.startswith("/api/employees/"):
             employee_id = int(path.split("/")[-1])
             return get_employee(self, employee_id)
+
+        # ✅ EMPLOYEE PROFILE
+        if path.startswith("/api/profile/"):
+            employee_id = int(path.split("/")[-1])
+            return get_employee_profile_controller(self, employee_id)
 
         # ✅ COMPLAINTS
         if path == "/api/complaints":

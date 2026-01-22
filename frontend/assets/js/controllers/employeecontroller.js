@@ -1,5 +1,5 @@
 const $ = (id) => document.getElementById(id);
-let state = { employees: [], departments: [], editingId: null };
+let state = { employees: [], departments: [], editingId: null, selectedEmployeeId: null };
 
 function showAlert(message, type = "success") {
   const container = $("alertContainer");
@@ -77,12 +77,116 @@ async function apiDelete(id) {
   return await fetch(`/api/employee/${id}`, { method: "DELETE" });
 }
 
+function viewProfile(employeeId) {
+  // Navigate to profile page with employee ID
+  window.location.href = `/profile/${employeeId}`;
+}
+
+async function showEmployeeModal(employeeId, name, email) {
+  // Show basic info first
+  $("modalEmployeeId").textContent = employeeId;
+  $("modalEmployeeName").textContent = name;
+  $("modalEmployeeEmail").textContent = email;
+  
+  // Hide full profile section, show basic info
+  $("basicInfoSection").classList.remove("hidden");
+  $("fullProfileSection").classList.add("hidden");
+  
+  // Show modal
+  $("employeeModal").classList.remove("hidden");
+  
+  // Store employee ID for full profile loading
+  state.selectedEmployeeId = employeeId;
+}
+
+function closeEmployeeModal() {
+  $("employeeModal").classList.add("hidden");
+  state.selectedEmployeeId = null;
+}
+
+async function showFullProfile() {
+  if (!state.selectedEmployeeId) return;
+  
+  // Show loading state
+  $("modalPayrollHistory").innerHTML = '<div class="text-center py-4"><div class="animate-spin rounded-full h-6 w-6 border-b-2 border-orange-500 mx-auto"></div></div>';
+  $("modalComplaintsHistory").innerHTML = '<div class="text-center py-4"><div class="animate-spin rounded-full h-6 w-6 border-b-2 border-orange-500 mx-auto"></div></div>';
+  
+  try {
+    // Fetch full profile data
+    const response = await fetch(`/api/profile/${state.selectedEmployeeId}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch employee profile");
+    }
+    
+    const data = await response.json();
+    const employee = data.employee;
+    
+    // Populate full profile data
+    $("modalEmployeeDepartment").textContent = employee.department_name || 'N/A';
+    $("modalEmployeeYear").textContent = employee.year;
+    
+    // Populate payroll history
+    if (data.payroll_history && data.payroll_history.length > 0) {
+      $("modalPayrollHistory").innerHTML = data.payroll_history.map(p => `
+        <div class="flex justify-between items-center bg-gray-700/50 rounded-lg p-3">
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-calendar text-orange-400"></i>
+            <span class="text-white">${p.month}</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-dollar-sign text-green-400"></i>
+            <span class="text-white font-semibold">$${p.salary}</span>
+          </div>
+        </div>
+      `).join('');
+      $("modalNoPayroll").classList.add("hidden");
+    } else {
+      $("modalPayrollHistory").innerHTML = '';
+      $("modalNoPayroll").classList.remove("hidden");
+    }
+    
+    // Populate complaints history
+    if (data.complaints && data.complaints.length > 0) {
+      $("modalComplaintsHistory").innerHTML = data.complaints.map(c => `
+        <div class="bg-gray-700/50 rounded-lg p-4">
+          <div class="flex items-start space-x-3">
+            <i class="fas fa-exclamation-triangle text-red-400 mt-1"></i>
+            <div class="flex-1">
+              <h4 class="text-white font-semibold">${c.title}</h4>
+              <p class="text-gray-300 text-sm mt-1">${c.description}</p>
+              <p class="text-gray-400 text-xs mt-2">${new Date(c.created_at).toLocaleDateString()}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      $("modalNoComplaints").classList.add("hidden");
+    } else {
+      $("modalComplaintsHistory").innerHTML = '';
+      $("modalNoComplaints").classList.remove("hidden");
+    }
+    
+    // Switch to full profile view
+    $("basicInfoSection").classList.add("hidden");
+    $("fullProfileSection").classList.remove("hidden");
+    
+  } catch (error) {
+    console.error("Error loading full profile:", error);
+    showAlert("Failed to load full profile", "error");
+  }
+}
+
+function showBasicInfo() {
+  // Switch back to basic info view
+  $("basicInfoSection").classList.remove("hidden");
+  $("fullProfileSection").classList.add("hidden");
+}
+
 function renderTable(employees) {
   const tbody = $("employeeTableBody");
   if (!tbody) return;
   
   tbody.innerHTML = employees.length ? employees.map(e => `
-    <tr class="backdrop-blur-sm">
+    <tr class="backdrop-blur-sm hover:bg-gray-800/30 transition-colors cursor-pointer" onclick="showEmployeeModal(${e.id}, '${e.name}', '${e.email}')">
       <td class="px-6 py-4 whitespace-nowrap">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-cyan-600 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-lg">
@@ -120,10 +224,10 @@ function renderTable(employees) {
       </td>
       <td class="px-6 py-4 whitespace-nowrap">
         <div class="flex justify-center space-x-2">
-          <button onclick="editEmployee(${e.id})" class="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-orange-500 hover:to-red-600 hover:text-white text-black px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-110 hover:rotate-1 shadow-lg flex items-center space-x-1">
+          <button onclick="editEmployee(${e.id}); event.stopPropagation()" class="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-orange-500 hover:to-red-600 hover:text-white text-black px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-110 hover:rotate-1 shadow-lg flex items-center space-x-1">
             <i class="fas fa-edit"></i><span>Edit</span>
           </button>
-          <button onclick="deleteEmployee(${e.id})" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-orange-500 hover:to-red-600 hover:text-white text-white px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-110 hover:-rotate-1 shadow-lg flex items-center space-x-1">
+          <button onclick="deleteEmployee(${e.id}); event.stopPropagation()" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-orange-500 hover:to-red-600 hover:text-white text-white px-3 py-2 rounded-lg text-xs font-bold transition-all duration-300 transform hover:scale-110 hover:-rotate-1 shadow-lg flex items-center space-x-1">
             <i class="fas fa-trash"></i><span>Delete</span>
           </button>
         </div>
@@ -179,6 +283,10 @@ window.deleteEmployee = async function(id) {
   }
 };
 
+window.viewProfile = function(id) {
+  window.location.href = `/profile?id=${id}`;
+};
+
 export function initEmployeeController() {
   const form = $("employeeForm");
   const cancelBtn = $("cancelBtn");
@@ -219,4 +327,12 @@ export function initEmployeeController() {
 
   loadDepartments();
   loadEmployees();
+}
+
+// Global functions for modal
+if (!window.profilePageLoaded) {
+  window.showEmployeeModal = showEmployeeModal;
+  window.closeEmployeeModal = closeEmployeeModal;
+  window.showFullProfile = showFullProfile;
+  window.showBasicInfo = showBasicInfo;
 }

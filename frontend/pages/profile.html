@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Profiles - Employee Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-black text-white font-poppins">
+    <div class="container mx-auto px-6 py-8">
+
+<script>
+window.empData = [
+    {id: 1, name: "John Doe", email: "john@company.com", department: "IT", position: "Developer", salary: 75000, joinDate: "2023-01-15", status: "Active"},
+    {id: 2, name: "Jane Smith", email: "jane@company.com", department: "HR", position: "Manager", salary: 85000, joinDate: "2022-06-10", status: "Active"}
+];
+
+window.selectedEmp = null;
+
+window.openEmpModal = function(id) {
+    console.log('Opening modal for employee ID:', id);
+    window.selectedEmp = window.empData.find(e => e.id === id);
+    if (!window.selectedEmp) {
+        console.log('Employee not found');
+        return;
+    }
+    
+    console.log('Selected employee:', window.selectedEmp);
+    
+    document.getElementById('empDetails').innerHTML = `
+        <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-gray-400 text-sm">ID</div>
+            <div class="text-white font-semibold">${window.selectedEmp.id}</div>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-gray-400 text-sm">Name</div>
+            <div class="text-white font-semibold">${window.selectedEmp.name}</div>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-gray-400 text-sm">Email</div>
+            <div class="text-white font-semibold">${window.selectedEmp.email}</div>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-gray-400 text-sm">Department</div>
+            <div class="text-white font-semibold">${window.selectedEmp.department}</div>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-gray-400 text-sm">Position</div>
+            <div class="text-white font-semibold">${window.selectedEmp.position}</div>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-gray-400 text-sm">Salary</div>
+            <div class="text-green-400 font-semibold">$${window.selectedEmp.salary.toLocaleString()}</div>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-gray-400 text-sm">Join Date</div>
+            <div class="text-white font-semibold">${window.selectedEmp.joinDate}</div>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-gray-400 text-sm">Status</div>
+            <div class="text-white font-semibold">
+                <span class="px-2 py-1 bg-green-600 rounded text-xs">${window.selectedEmp.status}</span>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('empModal').classList.remove('hidden');
+    console.log('Modal should be visible now');
+};
+
+window.closeEmpModal = function() {
+    document.getElementById('empModal').classList.add('hidden');
+};
+
+window.exportEmpPDF = function() {
+    if (!window.selectedEmp) return;
+    
+    const w = window.open('', '_blank');
+    w.document.write(`
+        <html>
+        <head><title>Employee - ${window.selectedEmp.name}</title></head>
+        <body style="font-family: Arial; margin: 20px;">
+            <h1>Employee Details</h1>
+            <h2>${window.selectedEmp.name}</h2>
+            <p><strong>ID:</strong> ${window.selectedEmp.id}</p>
+            <p><strong>Email:</strong> ${window.selectedEmp.email}</p>
+            <p><strong>Department:</strong> ${window.selectedEmp.department}</p>
+            <p><strong>Position:</strong> ${window.selectedEmp.position}</p>
+            <p><strong>Salary:</strong> $${window.selectedEmp.salary.toLocaleString()}</p>
+            <p><strong>Join Date:</strong> ${window.selectedEmp.joinDate}</p>
+            <p><strong>Status:</strong> ${window.selectedEmp.status}</p>
+        </body>
+        </html>
+    `);
+    w.document.close();
+    w.print();
+};
+
+window.exportEmpCSV = function() {
+    if (!window.selectedEmp) return;
+    
+    const csv = [
+        ['Field', 'Value'],
+        ['ID', window.selectedEmp.id],
+        ['Name', window.selectedEmp.name],
+        ['Email', window.selectedEmp.email],
+        ['Department', window.selectedEmp.department],
+        ['Position', window.selectedEmp.position],
+        ['Salary', window.selectedEmp.salary],
+        ['Join Date', window.selectedEmp.joinDate],
+        ['Status', window.selectedEmp.status]
+    ].map(row => row.join(',')).join('\n');
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `employee_${window.selectedEmp.id}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+};
+</script>
+
+<div class="fade-in">
+    <h1 class="text-3xl font-bold text-white mb-8">Employee Profiles</h1>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-4 gap-6 mb-8">
+        <div class="card rounded-xl p-6 text-center">
+            <div class="text-3xl font-bold text-orange-500 mb-2">2</div>
+            <div class="text-gray-400 text-sm">Total Employees</div>
+        </div>
+        <div class="card rounded-xl p-6 text-center">
+            <div class="text-3xl font-bold text-blue-500 mb-2">2</div>
+            <div class="text-gray-400 text-sm">Departments</div>
+        </div>
+        <div class="card rounded-xl p-6 text-center">
+            <div class="text-3xl font-bold text-green-500 mb-2">$160,000</div>
+            <div class="text-gray-400 text-sm">Total Payroll</div>
+        </div>
+        <div class="card rounded-xl p-6 text-center">
+            <div class="text-3xl font-bold text-red-500 mb-2">1</div>
+            <div class="text-gray-400 text-sm">Active Complaints</div>
+        </div>
+    </div>
+
+    <!-- Employee Table -->
+    <div class="card rounded-xl p-6">
+        <h2 class="text-xl font-semibold text-white mb-6">Employee Directory</h2>
+        
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="text-gray-300 text-left">
+                    <th class="px-4 py-3">ID</th>
+                    <th class="px-4 py-3">Name</th>
+                    <th class="px-4 py-3">Email</th>
+                    <th class="px-4 py-3">Department</th>
+                    <th class="px-4 py-3">View Details</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-300">
+                <tr class="hover:bg-gray-800 cursor-pointer" onclick="openEmpModal(1)">
+                    <td class="px-4 py-3">1</td>
+                    <td class="px-4 py-3 text-white font-medium">John Doe</td>
+                    <td class="px-4 py-3">john@company.com</td>
+                    <td class="px-4 py-3">IT</td>
+                    <td class="px-4 py-3">
+                        <button class="text-orange-500 hover:text-orange-400" onclick="event.stopPropagation(); openEmpModal(1);">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </td>
+                </tr>
+                <tr class="hover:bg-gray-800 cursor-pointer" onclick="openEmpModal(2)">
+                    <td class="px-4 py-3">2</td>
+                    <td class="px-4 py-3 text-white font-medium">Jane Smith</td>
+                    <td class="px-4 py-3">jane@company.com</td>
+                    <td class="px-4 py-3">HR</td>
+                    <td class="px-4 py-3">
+                        <button class="text-orange-500 hover:text-orange-400" onclick="event.stopPropagation(); openEmpModal(2);">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="empModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-gray-900 rounded-xl max-w-2xl w-full">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-white">Employee Details</h2>
+                    <button onclick="closeEmpModal()" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div id="empDetails" class="grid grid-cols-2 gap-4 mb-6"></div>
+                
+                <div class="flex space-x-4">
+                    <button onclick="exportEmpPDF()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-file-pdf mr-2"></i> PDF
+                    </button>
+                    <button onclick="exportEmpCSV()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-file-csv mr-2"></i> CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+</body>
+</html>
