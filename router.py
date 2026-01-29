@@ -41,11 +41,19 @@ FRONTEND_ROUTES = {"/", "/home", "/employee", "/employees", "/complaints","/payr
 
 def handle_ui_routes(handler, path):
     if path in FRONTEND_ROUTES:
-        serve_static(handler, "frontend/pages/index.html")
+        if path == "/profile":
+            serve_static(handler, "frontend/pages/profile.html")
+        else:
+            serve_static(handler, "frontend/pages/index.html")
         return True
 
     if path.startswith("/frontend/"):
         serve_static(handler, path.lstrip("/"))
+        return True
+    
+    # Handle assets directly
+    if path.startswith("/assets/"):
+        serve_static(handler, f"frontend{path}")
         return True
 
     return False

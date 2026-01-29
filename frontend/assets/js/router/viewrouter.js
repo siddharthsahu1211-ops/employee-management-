@@ -5,6 +5,7 @@ import { initPayrollController } from "../controllers/payrollcontroller.js";
 import { initReportsController } from "../controllers/reportscontroller.js";
 import { initDepartmentsController } from "../controllers/departmentscontroller.js";
 import { initHomeController } from "../controllers/homecontroller.js";
+import { initProfilesController } from "../controllers/profilesController.js";
 
 // Load a view into #app container
 async function loadView(path) {
@@ -70,13 +71,32 @@ export async function router() {
       initReportsController(); // Initialize reports controller
       break;
 
-    case "/profile":
-      console.log("Loading profile view");
-      await loadView("/frontend/pages/profile.html");
-      // No controller needed - profile page handles its own logic
+    case "/profiles":
+      console.log("Loading profiles directory view");
+      await loadView("/frontend/pages/profiles.html");
+      initProfilesController(); // Initialize profiles controller
       break;
 
     default:
+      // Check for dynamic profile route: /profiles/:id
+      if (path.startsWith("/profiles/")) {
+        const idStr = path.split("/")[2]; // "/profiles/1" -> "1"
+        const id = Number(idStr);
+
+        // If invalid id, show 404
+        if (!Number.isInteger(id) || id <= 0) {
+          console.log("Loading 404 view for invalid profile ID");
+          await loadView("/frontend/pages/404.html");
+          return;
+        }
+
+        console.log("Loading profile detail view for ID:", id);
+        await loadView("/frontend/pages/profile.html");
+        const mod = await import("../controllers/profileController.js");
+        mod.initProfileController(id);
+        return;
+      }
+
       console.log("Loading 404 view for path:", path);
       await loadView("/frontend/pages/404.html");
   }

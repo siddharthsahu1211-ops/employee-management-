@@ -4,9 +4,11 @@
 import os
 import mimetypes
 from core.responses import send_404
+from core.middleware import add_cors_headers
 
-# Fix JS MIME type for ES modules
+# Fix MIME types for web assets
 mimetypes.add_type("application/javascript", ".js")
+mimetypes.add_type("text/css", ".css")
 
 def serve_static(handler, filepath):
     # Normalize path
@@ -14,28 +16,30 @@ def serve_static(handler, filepath):
 
     # File doesn't exist
     if not os.path.exists(full_path):
-        print("STATIC ERROR: File not found:", full_path)
         return send_404(handler)
 
     try:
         with open(full_path, "rb") as f:
             content = f.read()
 
-        content_type, _ = mimetypes.guess_type(full_path)
-
-        # Force-correct HTML + YAML types
-        if full_path.endswith(".html"):
-            content_type = "text/html"
-        elif full_path.endswith(".yaml") or full_path.endswith(".yml"):
-            content_type = "text/yaml"
+        # Force-correct MIME types
+        if full_path.endswith(".css"):
+            content_type = "text/css; charset=utf-8"
         elif full_path.endswith(".js"):
-            content_type = "application/javascript"
+            content_type = "application/javascript; charset=utf-8"
+        elif full_path.endswith(".html"):
+            content_type = "text/html; charset=utf-8"
+        else:
+            content_type, _ = mimetypes.guess_type(full_path)
+            content_type = content_type or "application/octet-stream"
 
         handler.send_response(200)
-        handler.send_header("Content-Type", content_type or "application/octet-stream")
+        handler.send_header("Content-Type", content_type)
+        handler.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+        add_cors_headers(handler)
         handler.end_headers()
         handler.wfile.write(content)
+        return
 
     except Exception as e:
-        print("STATIC ERROR:", e)
         return send_404(handler)
