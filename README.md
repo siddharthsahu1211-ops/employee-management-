@@ -1,15 +1,16 @@
 # Employee Management System
 
-A comprehensive web-based employee management system built with Python (backend) and JavaScript (frontend). This application allows organizations to manage employees, departments, payroll, complaints, and generate reports.
+A comprehensive web-based employee management system built with Python (backend) and JavaScript (frontend). This application allows organizations to manage employees, departments, payroll, complaints, and generate reports with a modern dark-themed interface.
 
 ## Features
 
 - **Employee Management**: Add, update, delete, and view employee information
 - **Department Management**: Organize employees by departments
 - **Payroll Processing**: Calculate and manage employee salaries
-- **Complaint System**: Handle employee complaints and resolutions
-- **Reports**: Generate various reports on employees and departments
-- **User-Friendly Interface**: Modern web interface with responsive design
+- **Complaint System**: Handle employee complaints with employee tracking
+- **Employee Directory & Reports**: Unified view with profile modals and export capabilities
+- **Modern UI/UX**: Dark theme with skeleton loading, micro-animations, and hover effects
+- **Export Functionality**: Export data to CSV and PDF formats
 - **RESTful API**: Backend API for easy integration
 
 ## Project Structure
@@ -39,30 +40,70 @@ employee-management-/
 │   └── static.py
 ├── frontend/              # Frontend application
 │   ├── pages/             # HTML pages
-│   │   ├── index.html
-│   │   ├── home.html
-│   │   ├── employees.html (implied)
-│   │   ├── departments.html
-│   │   ├── payroll.html
-│   │   ├── complaints.html
-│   │   ├── reports.html
-│   │   └── 404.html
+│   │   ├── index.html     # Main layout with navigation
+│   │   ├── home.html      # Dashboard with statistics
+│   │   ├── employees.html # Employee management
+│   │   ├── departments.html # Department management
+│   │   ├── payroll.html   # Payroll processing
+│   │   ├── complaints.html # Complaint system with employee tracking
+│   │   ├── reports.html   # Employee directory & reports with profiles
+│   │   └── 404.html       # Error page
 │   ├── assets/
 │   │   ├── css/
-│   │   │   └── style.css
+│   │   │   └── style.css  # Dark theme with animations
 │   │   └── js/
-│   │       ├── app.js
-│   │       ├── components/  # Reusable UI components
-│   │       ├── controllers/ # Frontend controllers
-│   │       ├── router/      # Frontend routing
-│   │       ├── services/    # Frontend services
-│   │       ├── state/       # State management
-│   │       └── utils/       # Utility functions
-│   └── env.js              # Environment configuration
+│   │       ├── app.js     # Main application entry
+│   │       ├── components/ # Reusable UI components
+│   │       ├── controllers/ # Page controllers
+│   │       ├── router/     # Frontend routing
+│   │       ├── services/   # API services
+│   │       ├── state/      # State management
+│   │       └── utils/      # Utilities (skeleton, export, etc.)
+│   └── env.js             # Environment configuration
 ├── tests/                 # Unit and integration tests
 │   ├── test_api_smoke.py
 │   └── test_db_basic.py
 └── README.md
+```
+
+## How It Works - Application Flow
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   User Opens    │    │  Frontend Loads │    │ Backend Server  │
+│   Web Browser   │───▶│   HTML/CSS/JS   │───▶│   Starts (app.py)│
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                                        │
+                                                        ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Navigation    │    │  Page Controllers│    │   API Routes    │
+│   Menu Clicked  │───▶│   Handle Actions │───▶│  (router.py)    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                                        │
+                                                        ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Data Display  │    │  Business Logic │    │   Database      │
+│   (Tables/Forms)│◀───│  (Controllers)  │◀───│   Operations    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+### Step-by-Step User Journey:
+
+1. **Start Application**: Run `python app.py` → Server starts on localhost:5000
+2. **Access Website**: Open browser → Navigate to localhost:5000 → Main page loads
+3. **Navigate Pages**: Click menu items → JavaScript router loads different pages
+4. **Perform Actions**: 
+   - Add Employee → Form submission → API call → Database insert
+   - View Reports → Data fetch → API response → Table display
+   - Process Payroll → Calculate salaries → Store in database
+   - Submit Complaint → Select employee → Save complaint record
+5. **Export Data**: Click export buttons → Generate CSV/PDF → Download file
+
+### Data Flow Example (Adding an Employee):
+```
+User fills form → JavaScript validates → POST /api/employees → 
+Controller processes → Service layer → Database saves → 
+Success response → UI updates → Employee appears in list
 ```
 
 ## Installation
@@ -120,12 +161,12 @@ For development:
 1. Start the application as described in Installation
 2. Open your browser and navigate to `http://localhost:5000`
 3. Use the navigation menu to access different sections:
-   - **Home**: Dashboard overview
-   - **Employees**: Manage employee records
-   - **Departments**: Organize departments
-   - **Payroll**: Process payroll
-   - **Complaints**: Handle employee complaints
-   - **Reports**: View reports
+   - **Home**: Dashboard with statistics and overview
+   - **Employees**: Manage employee records with CRUD operations
+   - **Departments**: Organize and manage departments
+   - **Payroll**: Process and manage employee payroll
+   - **Complaints**: Handle employee complaints with employee tracking
+   - **Reports**: Employee directory with profile viewing and export options
 
 ## API Endpoints
 
@@ -167,6 +208,14 @@ Or run specific tests:
 python tests/test_api_smoke.py
 python tests/test_db_basic.py
 ```
+
+## Recent Updates
+
+- **Enhanced UI/UX**: Implemented dark theme with skeleton loading animations and micro-interactions
+- **Merged Profile & Reports**: Combined employee profiles into the reports page for better user experience
+- **Complaint Tracking**: Added employee selection to track which employee made each complaint
+- **Export Features**: Added CSV and PDF export functionality for employee data
+- **Performance Improvements**: Optimized loading states and data rendering
 
 ## Contributing
 
