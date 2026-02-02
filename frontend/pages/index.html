@@ -90,6 +90,52 @@
             0%, 100% { box-shadow: 0 0 20px rgba(255, 165, 0, 0.3); }
             50% { box-shadow: 0 0 40px rgba(255, 165, 0, 0.6); }
         }
+        
+        /* Skeleton Loading */
+        .skeleton {
+            background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Button Ripple Effect */
+        .btn-ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-ripple::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .btn-ripple:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Hover Animations */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .hover-glow:hover {
+            box-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+        }
     </style>
 </head>
 <body class="bg-black min-h-screen text-white relative overflow-x-hidden">
@@ -114,41 +160,32 @@
                     <span class="text-white text-xl font-bold">EmployeeHub</span>
                 </div>
                 <nav class="hidden md:flex items-center space-x-1">
-                    <a href="/home" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                    <a href="/home" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2 hover-lift btn-ripple">
                         <i class="fas fa-home text-sm"></i>
                         <span>Home</span>
                     </a>
-                    <a href="/employee" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                    <a href="/employee" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2 hover-lift btn-ripple">
                         <i class="fas fa-users text-sm"></i>
                         <span>Employees</span>
                     </a>
                    
-                    <a href="/departments" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                    <a href="/departments" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2 hover-lift btn-ripple">
                         <i class="fas fa-building text-sm"></i>
                         <span>Departments</span>
                     </a>
-                    <a href="/payroll" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                    <a href="/payroll" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2 hover-lift btn-ripple">
                         <i class="fas fa-money-bill-wave text-sm"></i>
                         <span>Payroll</span>
                     </a>
-                    <a href="/complaints" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                    <a href="/complaints" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2 hover-lift btn-ripple">
                         <i class="fas fa-exclamation-circle text-sm"></i>
                         <span>Complaints</span>
                     </a>
-                    <a href="/reports" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
+                    <a href="/reports" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2 hover-lift btn-ripple">
                         <i class="fas fa-chart-line text-sm"></i>
-                        <span>Reports</span>
-                    </a>
-                    <a href="/profile" data-link class="nav-link px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-all duration-200 flex items-center space-x-2">
-                        <i class="fas fa-user text-sm"></i>
-                        <span>Profiles</span>
+                        <span>Reports & Profiles</span>
                     </a>
                 </nav>
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
-                        <i class="fas fa-user text-gray-300 text-sm"></i>
-                    </div>
-                </div>
             </div>
         </div>
     </header>

@@ -6,8 +6,8 @@ from database.connection import init_database
 
 def run_server():
     init_database()
-    server = HTTPServer(("", 8000), employeeRouter)
-    print("🚀 Server running at http://localhost:8000")
+    server = HTTPServer(("", 5000), employeeRouter)
+    print("🚀 Server running at http://localhost:5000")
     server.serve_forever()
 
 if __name__ == "__main__":

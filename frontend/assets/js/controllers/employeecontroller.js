@@ -8,25 +8,20 @@ function showAlert(message, type = "success") {
     return;
   }
   const el = document.createElement("div");
-  el.className = `alert alert-${type} px-6 py-4 text-white font-medium flex items-center space-x-3 min-w-80 max-w-md`;
-  
-  const iconClass = type === "success" ? "fa-check" : "fa-exclamation-triangle";
+  el.className = `px-6 py-4 rounded-2xl shadow-2xl text-white transform transition-all duration-500 ${type === "success" ? "bg-gradient-to-r from-green-500 to-emerald-600" : "bg-gradient-to-r from-red-500 to-red-600"} flex items-center space-x-3 backdrop-blur-sm border border-white/20 relative z-50`;
   el.innerHTML = `
-    <div class="alert-icon">
-      <i class="fas ${iconClass}"></i>
+    <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+      <i class="fas ${type === "success" ? "fa-check" : "fa-exclamation-triangle"} text-sm"></i>
     </div>
-    <div class="flex-1">
-      <div class="font-bold text-sm">${type === "success" ? "Success" : "Error"}</div>
-      <div class="text-xs opacity-90">${message}</div>
-    </div>
-    <button onclick="this.parentElement.classList.add('alert-exit'); setTimeout(() => this.parentElement.remove(), 300)" class="text-white/70 hover:text-white transition-colors">
+    <span class="font-medium">${message}</span>
+    <button onclick="this.parentElement.remove()" class="ml-auto w-6 h-6 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
       <i class="fas fa-times text-xs"></i>
     </button>
   `;
-  
   container.appendChild(el);
   setTimeout(() => {
-    el.classList.add('alert-exit');
+    el.style.transform = "translateX(100%) scale(0.8)";
+    el.style.opacity = "0";
     setTimeout(() => el.remove(), 300);
   }, 4000);
 }

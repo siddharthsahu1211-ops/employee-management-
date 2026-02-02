@@ -5,39 +5,57 @@
             <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl mb-4 shadow-lg">
                 <i class="fas fa-chart-bar text-white text-2xl"></i>
             </div>
-            <h1 class="text-4xl font-bold text-white mb-2">Employee Reports</h1>
-            <p class="text-orange-300 text-lg">Comprehensive employee and payroll analytics</p>
+            <h1 class="text-4xl font-bold text-white mb-2">Employee Directory & Reports</h1>
+            <p class="text-orange-300 text-lg">Comprehensive employee management and analytics</p>
         </div>
 
-        <!-- Filter Section -->
-        <div class="card rounded-3xl shadow-xl p-8 mb-8 relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 to-red-600"></div>
-            <div class="flex items-center mb-6">
-                <div class="w-8 h-8 bg-orange-500 bg-opacity-20 rounded-lg flex items-center justify-center mr-3">
-                    <i class="fas fa-filter text-orange-400"></i>
+        <!-- Search & Filter Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-8">
+            <!-- Search and Filter Section -->
+            <div class="card rounded-3xl shadow-xl p-6 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 to-red-600"></div>
+                <div class="flex items-center mb-4">
+                    <div class="w-8 h-8 bg-orange-500 bg-opacity-20 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas fa-search text-orange-400"></i>
+                    </div>
+                    <h2 class="text-xl font-semibold text-white">Search & Filter Employees</h2>
                 </div>
-                <h2 class="text-2xl font-semibold text-white">Filter Reports</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-2">
-                    <label class="block text-sm font-medium text-gray-300">
-                        <i class="fas fa-calendar text-orange-400 mr-2"></i>Month Filter
-                    </label>
-                    <select id="monthFilter" class="w-full px-4 py-3 border-2 border-gray-600 rounded-xl focus:border-orange-500 focus:ring-0 transition-colors duration-200 bg-gray-800 text-white">
-                        <option value="">All Months</option>
-                    </select>
-                </div>
-                <div class="space-y-2">
-                    <label class="block text-sm font-medium text-gray-300">
-                        <i class="fas fa-sort-amount-up text-orange-400 mr-2"></i>Salary Range
-                    </label>
-                    <select id="salaryFilter" class="w-full px-4 py-3 border-2 border-gray-600 rounded-xl focus:border-orange-500 focus:ring-0 transition-colors duration-200 bg-gray-800 text-white">
-                        <option value="">All Salaries</option>
-                        <option value="0-50000">₹0 - ₹50,000</option>
-                        <option value="50000-100000">₹50,000 - ₹1,00,000</option>
-                        <option value="100000+">₹1,00,000+</option>
-                    </select>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-300">
+                            <i class="fas fa-search text-orange-400 mr-2"></i>Search Employees
+                        </label>
+                        <input type="text" id="employeeSearch" placeholder="Search by name, email, department..." class="w-full px-3 py-2 border-2 border-gray-600 rounded-lg focus:border-orange-500 focus:ring-0 transition-colors duration-200 bg-gray-800 text-white text-sm">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-300">
+                            <i class="fas fa-sort text-orange-400 mr-2"></i>Sort By
+                        </label>
+                        <select id="sortBy" class="w-full px-3 py-2 border-2 border-gray-600 rounded-lg focus:border-orange-500 focus:ring-0 transition-colors duration-200 bg-gray-800 text-white text-sm">
+                            <option value="name">Name</option>
+                            <option value="email">Email</option>
+                            <option value="department">Department</option>
+                            <option value="salary">Salary</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-300">
+                            <i class="fas fa-sort-amount-up text-orange-400 mr-2"></i>Order
+                        </label>
+                        <select id="sortOrder" class="w-full px-3 py-2 border-2 border-gray-600 rounded-lg focus:border-orange-500 focus:ring-0 transition-colors duration-200 bg-gray-800 text-white text-sm">
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-300">
+                            <i class="fas fa-calendar text-orange-400 mr-2"></i>Month Filter
+                        </label>
+                        <select id="monthFilter" class="w-full px-3 py-2 border-2 border-gray-600 rounded-lg focus:border-orange-500 focus:ring-0 transition-colors duration-200 bg-gray-800 text-white text-sm">
+                            <option value="">All Months</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,28 +96,28 @@
             </div>
         </div>
 
-        <!-- Report Table -->
+        <!-- Employee Directory with Payroll -->
         <div class="card rounded-3xl shadow-xl overflow-hidden relative">
             <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 to-red-600"></div>
             <div class="bg-gradient-to-r from-orange-600 to-red-600 px-8 py-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
                         <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-table text-white"></i>
+                            <i class="fas fa-users text-white"></i>
                         </div>
-                        <h2 class="text-xl font-semibold text-white">Employee Payroll Report</h2>
+                        <h2 class="text-xl font-semibold text-white">Employee Directory & Payroll</h2>
                     </div>
                     <div class="flex items-center space-x-3">
-                        <button id="exportCSV" class="btn-secondary text-sm px-4 py-2 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 flex items-center space-x-2">
+                        <button id="exportCSV" class="btn-secondary text-sm px-4 py-2 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 flex items-center space-x-2 hover-glow btn-ripple">
                             <i class="fas fa-file-csv"></i>
                             <span>Export CSV</span>
                         </button>
-                        <button id="exportPDF" class="btn-secondary text-sm px-4 py-2 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 flex items-center space-x-2">
+                        <button id="exportPDF" class="btn-secondary text-sm px-4 py-2 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 flex items-center space-x-2 hover-glow btn-ripple">
                             <i class="fas fa-file-pdf"></i>
                             <span>Export PDF</span>
                         </button>
                         <div class="text-sm text-gray-200">
-                            <i class="fas fa-database mr-1"></i>Joined Data View
+                            <i class="fas fa-database mr-1"></i>Click any employee to view full profile
                         </div>
                     </div>
                 </div>
@@ -107,30 +125,145 @@
             
             <div id="loadingSpinner" class="text-center py-8 bg-black">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto"></div>
-                <p class="text-gray-400 mt-2">Loading reports...</p>
+                <p class="text-gray-400 mt-2">Loading employee data...</p>
             </div>
 
-            <div id="reportTableContainer" class="hidden overflow-x-auto bg-black">
+            <div id="employeeTableContainer" class="hidden overflow-x-auto bg-black">
                 <table class="w-full">
                     <thead class="bg-gray-900">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Employee ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Employee</th>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Email</th>
                             <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Department</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Salary</th>
-                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Month</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Base Salary</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Latest Payroll</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="reportTableBody" class="bg-black"></tbody>
+                    <tbody id="employeeTableBody" class="bg-black"></tbody>
                 </table>
-                <div id="noReports" class="px-8 py-16 text-center hidden bg-black">
+                <div id="noEmployees" class="px-8 py-16 text-center hidden bg-black">
                     <div class="flex flex-col items-center space-y-4">
                         <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
-                            <i class="fas fa-chart-line text-gray-500 text-2xl"></i>
+                            <i class="fas fa-users text-gray-500 text-2xl"></i>
                         </div>
-                        <p class="text-gray-400 text-lg font-medium">No report data found</p>
-                        <p class="text-gray-500 text-sm">Add employees and payroll records to generate reports</p>
+                        <p class="text-gray-400 text-lg font-medium">No employees found</p>
+                        <p class="text-gray-500 text-sm">Add employees to get started</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+
+    </div>
+</div>
+
+<!-- Employee Profile Modal -->
+<div id="employeeProfileModal" class="fixed inset-0 bg-black bg-opacity-75 backdrop-blur-sm hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-gray-900 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="relative">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-t-3xl"></div>
+                <div class="flex items-center justify-between p-8 pb-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                            <span id="modalEmployeeId"></span>
+                        </div>
+                        <div>
+                            <h2 id="modalEmployeeName" class="text-2xl font-bold text-white"></h2>
+                            <p class="text-gray-400">Complete Employee Profile</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button id="exportEmployeeCSV" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2">
+                            <i class="fas fa-file-csv"></i>
+                            <span>Export CSV</span>
+                        </button>
+                        <button id="exportEmployeePDF" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Export PDF</span>
+                        </button>
+                        <button id="closeProfileModal" class="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-xl flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="px-8 pb-8">
+                <!-- Basic Info Section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-gray-800/50 rounded-xl p-6">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg">
+                                <i class="fas fa-envelope text-white text-xs"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-300">Email Address</span>
+                        </div>
+                        <p id="modalEmployeeEmail" class="text-white font-semibold text-lg"></p>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-xl p-6">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center shadow-lg">
+                                <i class="fas fa-building text-white text-xs"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-300">Department</span>
+                        </div>
+                        <p id="modalEmployeeDepartment" class="text-white font-semibold text-lg"></p>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-xl p-6">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg">
+                                <i class="fas fa-money-bill-wave text-white text-xs"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-300">Salary</span>
+                        </div>
+                        <p id="modalEmployeeSalary" class="text-green-400 font-semibold text-lg"></p>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-xl p-6">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
+                                <i class="fas fa-calendar text-white text-xs"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-300">Year/Level</span>
+                        </div>
+                        <p id="modalEmployeeYear" class="text-white font-semibold text-lg"></p>
+                    </div>
+                </div>
+
+                <!-- Payroll History -->
+                <div class="bg-gray-800/50 rounded-xl p-6 mb-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg">
+                            <i class="fas fa-money-bill-wave text-white text-xs"></i>
+                        </div>
+                        <span class="text-lg font-semibold text-white">Payroll History</span>
+                    </div>
+                    <div id="modalPayrollHistory" class="space-y-3">
+                        <!-- Payroll history will be loaded here -->
+                    </div>
+                    <div id="modalNoPayroll" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-money-bill-wave text-2xl mb-2"></i>
+                        <p>No payroll records found</p>
+                    </div>
+                </div>
+
+                <!-- Complaints History -->
+                <div class="bg-gray-800/50 rounded-xl p-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-red-500 to-pink-600 rounded-lg flex items-center justify-center shadow-lg">
+                            <i class="fas fa-exclamation-triangle text-white text-xs"></i>
+                        </div>
+                        <span class="text-lg font-semibold text-white">Complaints History</span>
+                    </div>
+                    <div id="modalComplaintsHistory" class="space-y-3">
+                        <!-- Complaints history will be loaded here -->
+                    </div>
+                    <div id="modalNoComplaints" class="text-center py-4 text-gray-400">
+                        <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                        <p>No complaints found</p>
                     </div>
                 </div>
             </div>

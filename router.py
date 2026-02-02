@@ -37,23 +37,32 @@ from controllers.profile import (
     get_employee_profile_controller
 )
 
-FRONTEND_ROUTES = {"/", "/home", "/employee", "/employees", "/complaints","/payroll", "/departments", "/reports", "/profile"}
+FRONTEND_ROUTES = {"/", "/home", "/employee", "/employees", "/complaints","/payroll", "/departments", "/reports"}
 
 def handle_ui_routes(handler, path):
+    # Handle main app routes
     if path in FRONTEND_ROUTES:
-        if path == "/profile":
-            serve_static(handler, "frontend/pages/profile.html")
-        else:
-            serve_static(handler, "frontend/pages/index.html")
+        serve_static(handler, "frontend/pages/index.html")
         return True
 
+    # Handle frontend pages directly
+    if path.startswith("/frontend/pages/"):
+        serve_static(handler, path.lstrip("/"))
+        return True
+
+    # Handle all frontend assets
     if path.startswith("/frontend/"):
         serve_static(handler, path.lstrip("/"))
         return True
     
-    # Handle assets directly
+    # Handle assets directly (alternative path)
     if path.startswith("/assets/"):
         serve_static(handler, f"frontend{path}")
+        return True
+        
+    # Handle env.js specifically
+    if path == "/frontend/env.js":
+        serve_static(handler, "frontend/env.js")
         return True
 
     return False
@@ -68,7 +77,8 @@ class employeeRouter(BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = urlparse(self.path).path
-
+        
+        # Handle static files first
         if handle_ui_routes(self, path):
             return
 
@@ -77,21 +87,30 @@ class employeeRouter(BaseHTTPRequestHandler):
             return get_all_employee(self)
 
         if path.startswith("/api/employee/") or path.startswith("/api/employees/"):
-            employee_id = int(path.split("/")[-1])
-            return get_employee(self, employee_id)
+            try:
+                employee_id = int(path.split("/")[-1])
+                return get_employee(self, employee_id)
+            except ValueError:
+                return send_404(self)
 
         # ✅ EMPLOYEE PROFILE
         if path.startswith("/api/profile/"):
-            employee_id = int(path.split("/")[-1])
-            return get_employee_profile_controller(self, employee_id)
+            try:
+                employee_id = int(path.split("/")[-1])
+                return get_employee_profile_controller(self, employee_id)
+            except ValueError:
+                return send_404(self)
 
         # ✅ COMPLAINTS
         if path == "/api/complaints":
             return get_all_complaints_controller(self)
 
         if path.startswith("/api/complaints/"):
-            complaint_id = int(path.split("/")[-1])
-            return get_complaint_controller(self, complaint_id)
+            try:
+                complaint_id = int(path.split("/")[-1])
+                return get_complaint_controller(self, complaint_id)
+            except ValueError:
+                return send_404(self)
 
         # ✅ PAYROLL
         if path == "/api/payroll":

@@ -1,5 +1,5 @@
 const $ = (id) => document.getElementById(id);
-let state = { complaints: [], employees: [], editingId: null };
+let state = { complaints: [], editingId: null };
 
 function showAlert(message, type = "success") {
   const container = $("alertContainer");
@@ -24,21 +24,6 @@ function showAlert(message, type = "success") {
     el.style.opacity = "0";
     setTimeout(() => el.remove(), 300);
   }, 4000);
-}
-
-async function loadEmployees() {
-  try {
-    const res = await fetch("/api/employees");
-    state.employees = res.ok ? await res.json() : [];
-    
-    const select = $("employee_id");
-    if (select) {
-      select.innerHTML = '<option value="">Select Employee</option>' + 
-        state.employees.map(e => `<option value="${e.id}">${e.name} (ID: ${e.id})</option>`).join('');
-    }
-  } catch (err) {
-    console.error("Failed to load employees:", err);
-  }
 }
 
 async function apiGetAll() {
@@ -72,25 +57,12 @@ function renderTable(complaints) {
   const tbody = $("complaintTableBody");
   if (!tbody) return;
   
-  tbody.innerHTML = complaints.length ? complaints.map(c => {
-    const employee = state.employees.find(e => e.id === c.employee_id);
-    return `
+  tbody.innerHTML = complaints.length ? complaints.map(c => `
     <tr class="backdrop-blur-sm">
       <td class="px-6 py-4 whitespace-nowrap">
         <div class="flex items-center">
           <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-600 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-lg">
             ${c.id}
-          </div>
-        </div>
-      </td>
-      <td class="px-6 py-4 whitespace-nowrap">
-        <div class="flex items-center space-x-3">
-          <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center">
-            <i class="fas fa-user text-white text-xs"></i>
-          </div>
-          <div>
-            <div class="text-sm font-bold text-white">${employee ? employee.name : 'Unknown'}</div>
-            <div class="text-xs text-gray-400">ID: ${c.employee_id || 'N/A'}</div>
           </div>
         </div>
       </td>
@@ -111,8 +83,7 @@ function renderTable(complaints) {
         </div>
       </td>
     </tr>
-    `;
-  }).join('') : '';
+  `).join('') : '';
 }
 
 async function loadComplaints() {
@@ -145,7 +116,6 @@ window.editComplaint = function(id) {
   if (!item) return;
   
   state.editingId = id;
-  $("employee_id").value = item.employee_id || '';
   $("title").value = item.title;
   $("description").value = item.description;
   $("cancelBtn").classList.remove("hidden");
@@ -170,7 +140,6 @@ export function initComplaintController() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = {
-      employee_id: parseInt($("employee_id").value) || null,
       title: $("title").value.trim(),
       description: $("description").value.trim()
     };
@@ -198,6 +167,5 @@ export function initComplaintController() {
     });
   }
 
-  loadEmployees();
   loadComplaints();
 }
